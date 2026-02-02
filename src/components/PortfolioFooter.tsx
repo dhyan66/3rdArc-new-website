@@ -3,26 +3,26 @@ const PortfolioFooter = () => {
     <footer className="max-w-[1600px] mx-auto px-3 md:px-5 pb-16">
       <div className="text-center text-[10px] uppercase tracking-widest font-inter text-muted-foreground">
         <a
-          href="mailto:hello@morganblake.com"
+          href="mailto:3rdarc@gmail.com"
           className="hover:text-foreground transition-colors"
         >
-          E: hello@morganblake.com
+          E: 3rdarc@gmail.com
         </a>
         <span className="mx-2">/</span>
         <a
-          href="tel:+442071234567"
+          href="tel:+17059705244"
           className="hover:text-foreground transition-colors"
         >
-          M: +44 (0)20 7123 4567
+          M: +1 (705) 970-5244
         </a>
         <span className="mx-2">/</span>
         <a
-          href="https://instagram.com/morganblake.photo"
+          href="https://instagram.com/3rdarcproductions"
           target="_blank"
           rel="noopener noreferrer"
           className="hover:text-foreground transition-colors"
         >
-          I: @morganblake.photo
+          I: @3rdarcproductions
         </a>
       </div>
     </footer>

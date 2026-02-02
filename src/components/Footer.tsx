@@ -37,15 +37,22 @@ const Footer = () => {
             aria-label="Visit our Instagram page"
           >
             <Instagram className="w-5 h-5" />
-            Instagram
+            @3rdarcproductions
           </a>
           <a
-            href="mailto:contact@3rdarcproductions.com"
+            href="mailto:3rdarc@gmail.com"
             className="text-sm uppercase tracking-widest hover:opacity-60 transition-opacity duration-300 flex items-center gap-x-2 py-2"
             aria-label="Send us an email"
           >
             <Mail className="w-5 h-5" />
-            Email
+            E: 3rdarc@gmail.com
+          </a>
+          <a
+            href="tel:+17059705244"
+            className="text-sm uppercase tracking-widest hover:opacity-60 transition-opacity duration-300 flex items-center gap-x-2 py-2"
+            aria-label="Call us"
+          >
+            M: +1 (705) 970-5244
           </a>
           
           <p className="text-xs text-muted-foreground mt-8">
