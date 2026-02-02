@@ -71,81 +71,86 @@ const MasonryGallery = ({ images, onImageClick }: MasonryGalleryProps) => {
             style={{ height: "270px" }}
           >
             <div className="relative h-full overflow-hidden">
-              {image.type === "video" ? (
-                // Video element with thumbnail poster
-                <div className="relative h-full w-auto inline-block">
-                  {image.width && image.height && (
-                    <svg
-                      width={image.width}
-                      height={image.height}
-                      viewBox={`0 0 ${image.width} ${image.height}`}
-                      className="h-full w-auto"
-                    >
-                      <rect
-                        width={image.width}
-                        height={image.height}
-                        fill="white"
-                      />
-                    </svg>
-                  )}
-                  <video
-                    poster={image.src}
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    onLoadedData={() => handleImageLoad(index)}
-                    className={`absolute top-0 left-0 h-full w-auto object-contain transition-all duration-400 ${
-                      hoveredIndex !== null && hoveredIndex !== index
-                        ? "grayscale"
-                        : ""
+              {(() => {
+                const hasDimensions = Boolean(image.width && image.height);
+                if (image.type === "video") {
+                  return (
+                    <div className="relative h-full w-auto inline-block">
+                      {hasDimensions && (
+                        <svg
+                          width={image.width}
+                          height={image.height}
+                          viewBox={`0 0 ${image.width} ${image.height}`}
+                          className="h-full w-auto"
+                        >
+                          <rect
+                            width={image.width}
+                            height={image.height}
+                            fill="white"
+                          />
+                        </svg>
+                      )}
+                      <video
+                        poster={image.src}
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        onLoadedData={() => handleImageLoad(index)}
+                        className={`${hasDimensions ? "absolute top-0 left-0" : "block"} h-full w-auto object-contain transition-all duration-400 ${
+                          hoveredIndex !== null && hoveredIndex !== index
+                            ? "grayscale"
+                            : ""
+                        }`}
+                        style={{
+                          opacity: loadedImages.has(index) ? 1 : 0,
+                          transition: "opacity 0.5s ease-out",
+                        }}
+                      >
+                        <source src={image.videoSrc} type="video/mp4" />
+                      </video>
+                    </div>
+                  );
+                }
+
+                return (
+                  <picture
+                    className={`inline-block h-full w-auto ${
+                      loadedImages.has(index) ? "show" : ""
                     }`}
-                    style={{
-                      opacity: loadedImages.has(index) ? 1 : 0,
-                      transition: "opacity 0.5s ease-out",
-                    }}
                   >
-                    <source src={image.videoSrc} type="video/mp4" />
-                  </video>
-                </div>
-              ) : (
-                // Image element with SVG placeholder
-                <picture
-                  className={`inline-block h-full w-auto ${
-                    loadedImages.has(index) ? "show" : ""
-                  }`}
-                >
-                  {image.width && image.height && (
-                    <svg
-                      width={image.width}
-                      height={image.height}
-                      viewBox={`0 0 ${image.width} ${image.height}`}
-                      className="h-full w-auto"
-                    >
-                      <rect
+                    {hasDimensions && (
+                      <svg
                         width={image.width}
                         height={image.height}
-                        fill="white"
-                      />
-                    </svg>
-                  )}
-                  <img
-                    src={image.src}
-                    alt={image.alt}
-                    onLoad={() => handleImageLoad(index)}
-                    className={`absolute top-0 left-0 h-full w-auto object-contain transition-all duration-400 ${
-                      hoveredIndex !== null && hoveredIndex !== index
-                        ? "grayscale"
-                        : ""
-                    }`}
-                    style={{
-                      opacity: loadedImages.has(index) ? 1 : 0,
-                      transition: "opacity 0.5s ease-out",
-                    }}
-                    loading="lazy"
-                  />
-                </picture>
-              )}
+                        viewBox={`0 0 ${image.width} ${image.height}`}
+                        className="h-full w-auto"
+                      >
+                        <rect
+                          width={image.width}
+                          height={image.height}
+                          fill="white"
+                        />
+                      </svg>
+                    )}
+                    <img
+                      src={image.src}
+                      alt={image.alt}
+                      onLoad={() => handleImageLoad(index)}
+                      className={`${hasDimensions ? "absolute top-0 left-0" : "block"} h-full w-auto object-contain transition-all duration-400 ${
+                        hoveredIndex !== null && hoveredIndex !== index
+                          ? "grayscale"
+                          : ""
+                      }`}
+                      style={{
+                        opacity: loadedImages.has(index) ? 1 : 0,
+                        transition: "opacity 0.5s ease-out",
+                      }}
+                      loading="lazy"
+                    />
+                  </picture>
+                );
+              })()}
               <ProgressiveBlur
                 className="pointer-events-none absolute bottom-0 left-0 h-[80%] w-full"
                 blurIntensity={0.6}
