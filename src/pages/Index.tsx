@@ -5,7 +5,7 @@ import PortfolioFooter from "@/components/PortfolioFooter";
 import MasonryGallery from "@/components/MasonryGallery";
 import Lightbox from "@/components/Lightbox";
 import SEO from "@/components/SEO";
-import { fetchMixedMedia } from "@/services/pexels";
+import { getLocalGalleryImages } from "@/services/local-gallery";
 
 const Index = () => {
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -18,21 +18,17 @@ const Index = () => {
   const activeCategory = "SELECTED";
 
   useEffect(() => {
-    const loadImages = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        const data = await fetchMixedMedia(activeCategory, 1, 20);
-        setDisplayImages(data.items);
-      } catch (err) {
-        console.error('Error fetching Pexels media:', err);
-        setError('Failed to load images. Please try again later.');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadImages();
+    try {
+      setLoading(true);
+      setError(null);
+      const items = getLocalGalleryImages(activeCategory);
+      setDisplayImages(items);
+    } catch (err) {
+      console.error('Error loading local gallery images:', err);
+      setError('Failed to load images. Please try again later.');
+    } finally {
+      setLoading(false);
+    }
   }, []); // Remove activeCategory dependency - it's now constant
 
   const handleImageClick = (index: number) => {
