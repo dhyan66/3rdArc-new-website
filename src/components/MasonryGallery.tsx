@@ -26,6 +26,7 @@ const MasonryGallery = ({ images, onImageClick }: MasonryGalleryProps) => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set());
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const videoRefs = useRef<Array<HTMLVideoElement | null>>([]);
 
   const handleImageLoad = (index: number) => {
     setLoadedImages((prev) => new Set(prev).add(index));
@@ -58,6 +59,28 @@ const MasonryGallery = ({ images, onImageClick }: MasonryGalleryProps) => {
     };
   }, []);
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const video = entry.target as HTMLVideoElement;
+          if (entry.isIntersecting) {
+            video.play().catch(() => undefined);
+          } else {
+            video.pause();
+          }
+        });
+      },
+      { rootMargin: "200px", threshold: 0.1 }
+    );
+
+    videoRefs.current.forEach((video) => {
+      if (video) observer.observe(video);
+    });
+
+    return () => observer.disconnect();
+  }, [images]);
+
   return (
     <div className="max-w-[1600px] mx-auto md:px-5 pb-16">
       <div className="gallery-hover-container text-center">
@@ -74,6 +97,9 @@ const MasonryGallery = ({ images, onImageClick }: MasonryGalleryProps) => {
               {(() => {
                 const hasDimensions = Boolean(image.width && image.height);
                 if (image.type === "video") {
+                  const poster = image.src && !image.src.toLowerCase().endsWith(".mp4")
+                    ? image.src
+                    : undefined;
                   return (
                     <div className="relative h-full w-auto inline-block">
                       {hasDimensions && (
@@ -91,12 +117,16 @@ const MasonryGallery = ({ images, onImageClick }: MasonryGalleryProps) => {
                         </svg>
                       )}
                       <video
-                        poster={image.src}
-                        autoPlay
+                        ref={(el) => {
+                          videoRefs.current[index] = el;
+                        }}
+                        poster={poster}
                         muted
                         loop
                         playsInline
-                        onLoadedData={() => handleImageLoad(index)}
+                        preload="metadata"
+                        disablePictureInPicture
+                        onCanPlayThrough={() => handleImageLoad(index)}
                         className={`${hasDimensions ? "absolute top-0 left-0" : "block"} h-full w-auto object-contain transition-all duration-400 ${
                           hoveredIndex !== null && hoveredIndex !== index
                             ? "grayscale"

@@ -4,6 +4,8 @@ interface LightboxProps {
   images: { 
     src: string; 
     alt: string;
+    type?: "image" | "video";
+    videoSrc?: string;
     photographer?: string;
     client?: string;
     location?: string;
@@ -17,7 +19,7 @@ const Lightbox = ({ images, initialIndex, onClose }: LightboxProps) => {
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
-  const imageRef = useRef<HTMLImageElement>(null);
+  const mediaRef = useRef<HTMLImageElement | HTMLVideoElement>(null);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -50,9 +52,9 @@ const Lightbox = ({ images, initialIndex, onClose }: LightboxProps) => {
   };
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!imageRef.current) return;
+    if (!mediaRef.current) return;
     
-    const imageRect = imageRef.current.getBoundingClientRect();
+    const imageRect = mediaRef.current.getBoundingClientRect();
     const clickX = e.clientX;
     const clickY = e.clientY;
     
@@ -72,9 +74,9 @@ const Lightbox = ({ images, initialIndex, onClose }: LightboxProps) => {
   };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!imageRef.current) return;
+    if (!mediaRef.current) return;
     
-    const imageRect = imageRef.current.getBoundingClientRect();
+    const imageRect = mediaRef.current.getBoundingClientRect();
     const mouseX = e.clientX;
     
     setCursorPos({ x: e.clientX, y: e.clientY });
@@ -150,12 +152,26 @@ const Lightbox = ({ images, initialIndex, onClose }: LightboxProps) => {
         className="relative w-full h-full flex items-center justify-center px-[10%]"
         onClick={handleClick}
       >
-        <img
-          ref={imageRef}
-          src={currentImage.src}
-          alt={currentImage.alt}
-          className="max-w-full max-h-[85vh] object-contain transition-opacity duration-300 pointer-events-none"
-        />
+        {currentImage.type === "video" ? (
+          <video
+            ref={mediaRef}
+            src={currentImage.videoSrc || currentImage.src}
+            poster={currentImage.src}
+            controls
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="max-w-full max-h-[85vh] object-contain transition-opacity duration-300"
+          />
+        ) : (
+          <img
+            ref={mediaRef}
+            src={currentImage.src}
+            alt={currentImage.alt}
+            className="max-w-full max-h-[85vh] object-contain transition-opacity duration-300 pointer-events-none"
+          />
+        )}
       </div>
     </div>
   );
