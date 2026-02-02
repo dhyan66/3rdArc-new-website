@@ -7,6 +7,15 @@ All colors MUST be HSL.
 */
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
   :root {
     --background: 0 0% 100%;
     --foreground: 0 0% 10%;
@@ -86,6 +95,14 @@ All colors MUST be HSL.
     --gray-500: 227 20% 60%;
     --gray-600: 227 30% 70%;
     --gray-800: 227 40% 85%;
+  }
+}
+
+@layer components {
+  .gallery-image {
+    content-visibility: auto;
+    contain-intrinsic-size: 270px 200px;
+    contain: layout paint style;
   }
 }
 
