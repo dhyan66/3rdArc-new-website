@@ -28,8 +28,6 @@ const contactSchema = z.object({
 type ContactFormValues = z.infer<typeof contactSchema>;
 
 const About = () => {
-  const [portrait, setPortrait] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
@@ -56,30 +54,6 @@ const About = () => {
     }, 1000);
   };
 
-  useEffect(() => {
-    const loadPortrait = async () => {
-      try {
-        // Fetch a professional photographer portrait from Pexels
-        const data = await fetchPexelsPhotos('PERSONAL', 1, 1); // Personal category has artistic portraits
-        if (data.photos.length > 0) {
-          const photo = data.photos[0];
-          setPortrait({
-            src: photo.src.large2x,
-            alt: photo.alt || 'Portrait',
-            width: photo.width,
-            height: photo.height,
-          });
-        }
-      } catch (err) {
-        console.error('Error fetching portrait:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadPortrait();
-  }, []);
-
   return (
     <>
       <SEO
@@ -100,7 +74,7 @@ const About = () => {
                 <img 
                   src="/3rd-arc-logo.png" 
                   alt="3rd Arc Productions" 
-                  className="h-24 md:h-32 w-auto"
+                  className="h-32 md:h-40 w-auto"
                 />
               </div>
               <h1 className="font-playfair text-4xl md:text-5xl text-foreground">
@@ -112,35 +86,13 @@ const About = () => {
             </div>
 
             {/* Portrait */}
-            {!loading && portrait && (
-              <div className="max-w-xs mx-auto border border-foreground/10 overflow-hidden">
-                <picture className="relative block">
-                  {portrait.width && portrait.height && (
-                    <svg
-                      width={portrait.width}
-                      height={portrait.height}
-                      viewBox={`0 0 ${portrait.width} ${portrait.height}`}
-                      className="w-full h-auto"
-                    >
-                      <rect
-                        width={portrait.width}
-                        height={portrait.height}
-                        fill="white"
-                      />
-                    </svg>
-                  )}
-                  <img
-                    src={portrait.src}
-                    alt={portrait.alt}
-                    className="absolute top-0 left-0 w-full h-auto grayscale"
-                    style={{
-                      opacity: loading ? 0 : 1,
-                      transition: 'opacity 0.5s ease-out'
-                    }}
-                  />
-                </picture>
-              </div>
-            )}
+            <div className="max-w-md mx-auto border border-foreground/10 overflow-hidden">
+              <img
+                src="/Owners.png"
+                alt="3rd Arc Productions Team"
+                className="w-full h-auto"
+              />
+            </div>
           </div>
 
           {/* Bio Section */}

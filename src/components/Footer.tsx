@@ -8,7 +8,7 @@ const Footer = () => {
         <img 
           src="/3rd-arc-logo.png" 
           alt="3rd Arc Productions" 
-          className="h-32 md:h-48 w-auto"
+          className="h-40 md:h-56 w-auto"
         />
       </div>
       
