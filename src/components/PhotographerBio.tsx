@@ -6,7 +6,7 @@ const PhotographerBio = () => {
           <img 
             src="/3rd-arc-logo.png" 
             alt="3rd Arc Productions" 
-            className="h-24 md:h-32 w-auto"
+            className="h-32 md:h-40 w-auto"
           />
         </div>
         <h2 className="font-playfair text-4xl md:text-5xl text-foreground">
