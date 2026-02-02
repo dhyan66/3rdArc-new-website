@@ -83,8 +83,8 @@ const About = () => {
   return (
     <>
       <SEO
-        title="About - Morgan Blake"
-        description="Learn about Morgan Blake, a production photographer specializing in fashion, editorial, and commercial photography."
+        title="About - 3rd Arc Productions"
+        description="Learn about 3rd Arc Productions, a professional production company specializing in photography, videography, and creative content."
         canonicalUrl="/about"
       />
 
@@ -96,11 +96,18 @@ const About = () => {
         <section className="max-w-[1600px] mx-auto pt-20 pb-12 md:pt-24 md:pb-16">
           <div className="text-center space-y-8 mb-16 px-3 md:px-5 max-w-2xl mx-auto">
             <div className="space-y-4">
+              <div className="flex justify-center mb-6">
+                <img 
+                  src="/3rd-arc-logo.png" 
+                  alt="3rd Arc Productions" 
+                  className="h-24 md:h-32 w-auto"
+                />
+              </div>
               <h1 className="font-playfair text-4xl md:text-5xl text-foreground">
-                Morgan Blake
+                3rd Arc Productions
               </h1>
               <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-inter">
-                PRODUCTION & PHOTOGRAPHY
+                CREATIVE PRODUCTION & PHOTOGRAPHY
               </p>
             </div>
 
@@ -139,14 +146,14 @@ const About = () => {
           {/* Bio Section */}
           <div className="max-w-2xl mx-auto px-3 md:px-5 space-y-8 text-center text-foreground/80 text-sm leading-relaxed mb-16">
             <p>
-              Production photographer specializing in fashion, editorial, and commercial photography.
-              Creating compelling imagery with technical precision and creative vision for global brands
-              and publications.
+              3rd Arc Productions is a professional production company specializing in photography,
+              videography, and creative content creation. We bring your vision to life with exceptional
+              quality and meticulous attention to detail.
             </p>
 
             <p>
-              Full production services including art buying, location scouting, casting, and on-set
-              management. Collaborative approach ensuring seamless execution from concept to delivery.
+              From concept to completion, we provide full production services tailored to your needs.
+              Our collaborative approach ensures your story is told authentically and beautifully.
             </p>
 
             <div className="pt-8">

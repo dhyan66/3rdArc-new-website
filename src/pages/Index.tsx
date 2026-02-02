@@ -42,36 +42,30 @@ const Index = () => {
 
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Morgan Blake",
-    "jobTitle": "Production Photographer",
-    "description": "Production photographer specializing in fashion, editorial, and commercial photography. Creating compelling imagery for global brands and publications.",
-    "url": "https://morganblake.com",
-    "image": "https://morganblake.com/og-image.jpg",
+    "@type": "Organization",
+    "name": "3rd Arc Productions",
+    "description": "Professional production company specializing in photography, videography, and creative content. Bringing your vision to life with exceptional quality and attention to detail.",
+    "url": "https://3rdarcproductions.com",
+    "image": "https://3rdarcproductions.com/og-image.jpg",
     "sameAs": [
-      "https://instagram.com/morganblake.photo"
+      "https://instagram.com/3rdarcproductions"
     ],
     "knowsAbout": [
-      "Fashion Photography",
-      "Editorial Photography",
-      "Commercial Production",
-      "Fashion Campaigns",
-      "Brand Photography"
-    ],
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "London",
-      "addressCountry": "UK"
-    }
+      "Photography",
+      "Videography",
+      "Creative Production",
+      "Commercial Content",
+      "Brand Content"
+    ]
   };
 
   return (
     <>
       <SEO
-        title="Morgan Blake - Fashion Production & Photography"
-        description="Production photographer specializing in fashion, editorial, and commercial photography. Creating compelling imagery for global brands and publications."
+        title="3rd Arc Productions - Creative Production & Photography"
+        description="Professional production company specializing in photography, videography, and creative content. Bringing your vision to life with exceptional quality and attention to detail."
         canonicalUrl="/"
-        ogType="profile"
+        ogType="website"
         jsonLd={jsonLd}
       />
 

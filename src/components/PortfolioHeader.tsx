@@ -45,21 +45,6 @@ const PortfolioHeader = ({ activeCategory }: PortfolioHeaderProps) => {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background">
       <div className="max-w-[1600px] mx-auto flex items-center justify-between md:justify-center px-3 md:px-5 py-3 gap-3">
-        <Link
-          to="/"
-          className="text-[10px] md:text-[11px] uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors font-inter whitespace-nowrap"
-          onMouseEnter={() => setHoveredItem('name')}
-          onMouseLeave={() => setHoveredItem(null)}
-        >
-          {hoveredItem === 'name' ? (
-            <TextRoll duration={0.3} getEnterDelay={(i) => i * 0.02} getExitDelay={(i) => i * 0.02}>
-              MORGAN BLAKE
-            </TextRoll>
-          ) : (
-            "MORGAN BLAKE"
-          )}
-        </Link>
-
         {/* Mobile Menu Button */}
         <button
           onClick={() => setMobileMenuOpen(true)}

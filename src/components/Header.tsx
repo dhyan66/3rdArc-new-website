@@ -46,17 +46,10 @@ const Header = () => {
           </Link>
         </nav>
 
-        <Link 
-          to="/" 
-          className="text-2xl font-light tracking-wide absolute left-1/2 -translate-x-1/2"
-        >
-          Raya
-        </Link>
-
         <div className="hidden md:flex gap-x-4 text-sm items-center">
           <ThemeToggle />
           <a
-            href="https://instagram.com/raya.photo"
+            href="https://instagram.com/3rdarcproductions"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:opacity-60 transition-opacity duration-300 p-2 -m-2 inline-flex items-center justify-center"
@@ -65,7 +58,7 @@ const Header = () => {
             <Instagram className="w-6 h-6" />
           </a>
           <a
-            href="mailto:hello@raya.photo"
+            href="mailto:contact@3rdarcproductions.com"
             className="hover:opacity-60 transition-opacity duration-300 p-2 -m-2 inline-flex items-center justify-center"
             aria-label="Send us an email"
           >

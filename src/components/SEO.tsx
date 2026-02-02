@@ -19,7 +19,7 @@ const SEO = ({
   twitterCard = "summary_large_image",
   jsonLd,
 }: SEOProps) => {
-  const siteUrl = "https://morganblake.com";
+  const siteUrl = "https://3rdarcproductions.com";
   const fullUrl = `${siteUrl}${canonicalUrl}`;
   const fullImageUrl = ogImage.startsWith("http") ? ogImage : `${siteUrl}${ogImage}`;
 
@@ -37,7 +37,7 @@ const SEO = ({
       <meta property="og:url" content={fullUrl} />
       <meta property="og:image" content={fullImageUrl} />
       <meta property="og:image:alt" content={title} />
-      <meta property="og:site_name" content="Morgan Blake Photography" />
+      <meta property="og:site_name" content="3rd Arc Productions" />
       <meta property="og:locale" content="en_US" />
 
       {/* Twitter Card Meta Tags */}
@@ -46,11 +46,11 @@ const SEO = ({
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={fullImageUrl} />
       <meta name="twitter:image:alt" content={title} />
-      <meta name="twitter:site" content="@morganblake.photo" />
-      <meta name="twitter:creator" content="@morganblake.photo" />
+      <meta name="twitter:site" content="@3rdarcproductions" />
+      <meta name="twitter:creator" content="@3rdarcproductions" />
 
       {/* Additional Meta Tags */}
-      <meta name="author" content="Morgan Blake" />
+      <meta name="author" content="3rd Arc Productions" />
       <meta name="robots" content="index, follow" />
       <meta name="googlebot" content="index, follow" />
       
