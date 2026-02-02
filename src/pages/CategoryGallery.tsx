@@ -6,7 +6,7 @@ import PortfolioFooter from "@/components/PortfolioFooter";
 import MasonryGallery from "@/components/MasonryGallery";
 import Lightbox from "@/components/Lightbox";
 import SEO from "@/components/SEO";
-import { fetchMixedMedia } from "@/services/pexels";
+import { getLocalGalleryImages } from "@/services/local-gallery";
 
 const validCategories = ['selected', 'commissioned', 'editorial', 'personal', 'all'];
 
@@ -17,7 +17,6 @@ const CategoryGallery = () => {
   const [error, setError] = useState<string | null>(null);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
-  const [page, setPage] = useState(1);
 
   // Validate category
   if (!category || !validCategories.includes(category.toLowerCase())) {
@@ -27,22 +26,18 @@ const CategoryGallery = () => {
   const categoryUpper = category.toUpperCase();
 
   useEffect(() => {
-    const loadImages = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        const data = await fetchMixedMedia(categoryUpper, page, 20);
-        setImages(data.items);
-      } catch (err) {
-        console.error('Error fetching Pexels media:', err);
-        setError('Failed to load images. Please try again later.');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadImages();
-  }, [categoryUpper, page]);
+    try {
+      setLoading(true);
+      setError(null);
+      const items = getLocalGalleryImages(categoryUpper);
+      setImages(items);
+    } catch (err) {
+      console.error('Error loading local gallery images:', err);
+      setError('Failed to load images. Please try again later.');
+    } finally {
+      setLoading(false);
+    }
+  }, [categoryUpper]);
 
   const handleImageClick = (index: number) => {
     setLightboxIndex(index);
