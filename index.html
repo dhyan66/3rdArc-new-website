@@ -48,9 +48,18 @@
     />
     <meta name="twitter:image" content="/og-image.jpg" />
 
-    <!-- Google Fonts -->
+    <!-- Preconnect to critical origins -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- DNS Prefetch for potential external resources -->
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+
+    <!-- Prefetch route pages for faster navigation -->
+    <link rel="prefetch" href="/about" />
+    <link rel="prefetch" href="/category/selected" />
+
+    <!-- Google Fonts with font-display: swap for faster initial render -->
     <link
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
@@ -59,6 +68,7 @@
 
   <body>
     <div id="root"></div>
+    <!-- Critical CSS inline would go here for above-the-fold content -->
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

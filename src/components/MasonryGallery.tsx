@@ -81,7 +81,7 @@ const MasonryGallery = ({ images, onImageClick }: MasonryGalleryProps) => {
   }, [images]);
 
   return (
-    <div className="max-w-[1600px] mx-auto md:px-5 pb-16" style={{ contain: 'content' }}>
+    <div className="max-w-[1600px] mx-auto md:px-5 pb-16" style={{ contain: 'content', scrollBehavior: 'smooth' }}>
       <div className="gallery-hover-container text-center">
         {images.map((image, index) => (
           <button
@@ -133,7 +133,7 @@ const MasonryGallery = ({ images, onImageClick }: MasonryGalleryProps) => {
                         }`}
                         style={{
                           opacity: loadedImages.has(index) ? 1 : 0,
-                          transition: "opacity 0.5s ease-out",
+                          transition: "opacity 0.4s ease-out",
                         }}
                       >
                         <source src={image.videoSrc} type="video/mp4" />
@@ -173,9 +173,10 @@ const MasonryGallery = ({ images, onImageClick }: MasonryGalleryProps) => {
                       }`}
                       style={{
                         opacity: loadedImages.has(index) ? 1 : 0,
-                        transition: "opacity 0.5s ease-out",
+                        transition: "opacity 0.4s ease-out",
                       }}
                       loading="lazy"
+                      decoding="async"
                     />
                   </picture>
                 );

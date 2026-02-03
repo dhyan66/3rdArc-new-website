@@ -15,8 +15,9 @@ const GalleryGrid = ({ images }: GalleryGridProps) => {
       {images.map((image, index) => (
         <div
           key={index}
-          className="overflow-hidden flex justify-center"
-        >
+          className="overflow-hidden flex justify-center"          style={{
+            animation: `slide-up-smooth 0.6s ease-out ${index * 0.05}s both`,
+          }}        >
           <ImageZoom
             src={image.src}
             alt={image.alt}

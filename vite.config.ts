@@ -21,6 +21,7 @@ export default defineConfig(({ mode }) => ({
         manualChunks: {
           'react-vendor': ['react', 'react-dom', 'react-router-dom'],
           'ui-vendor': ['motion/react', 'focus-trap-react'],
+          'query': ['@tanstack/react-query'],
         },
       },
     },
@@ -30,8 +31,15 @@ export default defineConfig(({ mode }) => ({
         drop_console: true,
       },
     },
+    // Optimize CSS
+    cssCodeSplit: true,
+    // Target modern browsers
+    target: 'es2020',
   },
   optimizeDeps: {
-    include: ['react', 'react-dom', 'react-router-dom', 'motion/react'],
+    include: ['react', 'react-dom', 'react-router-dom', 'motion/react', '@tanstack/react-query'],
+    esbuildOptions: {
+      target: 'es2020',
+    },
   },
 }));

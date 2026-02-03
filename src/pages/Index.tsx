@@ -5,6 +5,7 @@ import PortfolioFooter from "@/components/PortfolioFooter";
 import MasonryGallery from "@/components/MasonryGallery";
 import Lightbox from "@/components/Lightbox";
 import SEO from "@/components/SEO";
+import PageTransition from "@/components/PageTransition";
 import { getLocalGalleryImages } from "@/services/local-gallery";
 
 const Index = () => {
@@ -69,38 +70,40 @@ const Index = () => {
         activeCategory={activeCategory}
       />
       
-      <main style={{ contain: 'layout style paint' }}>
-        <PhotographerBio />
+      <PageTransition>
+        <main style={{ contain: 'layout style paint' }}>
+          <PhotographerBio />
 
-        {error && (
-          <div className="text-center py-20">
-            <p className="text-destructive">{error}</p>
-          </div>
-        )}
+          {error && (
+            <div className="text-center py-20">
+              <p className="text-destructive">{error}</p>
+            </div>
+          )}
 
-        {!error && displayImages.length > 0 && (
-          <MasonryGallery
+          {!error && displayImages.length > 0 && (
+            <MasonryGallery
+              images={displayImages}
+              onImageClick={handleImageClick}
+            />
+          )}
+
+          {!loading && !error && displayImages.length === 0 && (
+            <div className="text-center py-20">
+              <p className="text-muted-foreground">No images found in this category.</p>
+            </div>
+          )}
+        </main>
+
+        {lightboxOpen && displayImages.length > 0 && (
+          <Lightbox
             images={displayImages}
-            onImageClick={handleImageClick}
+            initialIndex={lightboxIndex}
+            onClose={() => setLightboxOpen(false)}
           />
         )}
 
-        {!loading && !error && displayImages.length === 0 && (
-          <div className="text-center py-20">
-            <p className="text-muted-foreground">No images found in this category.</p>
-          </div>
-        )}
-      </main>
-
-      {lightboxOpen && displayImages.length > 0 && (
-        <Lightbox
-          images={displayImages}
-          initialIndex={lightboxIndex}
-          onClose={() => setLightboxOpen(false)}
-        />
-      )}
-
-      <PortfolioFooter />
+        <PortfolioFooter />
+      </PageTransition>
     </>
   );
 };

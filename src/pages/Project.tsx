@@ -4,14 +4,14 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 
-import alpine1 from "@/assets/projects/alpine-1.jpg";
-import alpine2 from "@/assets/projects/alpine-2.jpg";
-import alpine3 from "@/assets/projects/alpine-3.jpg";
-import alpine4 from "@/assets/projects/alpine-4.jpg";
-import alpine5 from "@/assets/projects/alpine-5.jpg";
-import alpine6 from "@/assets/projects/alpine-6.jpg";
-import alpine7 from "@/assets/projects/alpine-7.jpg";
-import alpine8 from "@/assets/projects/alpine-8.jpg";
+import alpine1 from "@/assets/gallery/selected/DSC02365.jpg";
+import alpine2 from "@/assets/gallery/selected/DSC02377.jpg";
+import alpine3 from "@/assets/gallery/selected/DSC02408.jpg";
+import alpine4 from "@/assets/gallery/selected/DSC02446-2.jpg";
+import alpine5 from "@/assets/gallery/selected/DSC03919.jpg";
+import alpine6 from "@/assets/gallery/selected/DSC06316.jpg";
+import alpine7 from "@/assets/gallery/selected/DSC06321.jpg";
+import alpine8 from "@/assets/gallery/selected/DSC07525.png";
 
 const projectImages = [
   { src: alpine1, caption: "First Light on Summit Ridge" },

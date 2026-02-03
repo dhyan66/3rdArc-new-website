@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import PortfolioHeader from "@/components/PortfolioHeader";
 import PortfolioFooter from "@/components/PortfolioFooter";
+import PageTransition from "@/components/PageTransition";
 import SEO from "@/components/SEO";
 import { fetchPexelsPhotos } from "@/services/pexels";
 import { Button } from "@/components/ui/button";
@@ -66,7 +67,8 @@ const About = () => {
         activeCategory=""
       />
       
-      <main className="min-h-screen">
+      <PageTransition>
+        <main className="min-h-screen">
         <section className="max-w-[1600px] mx-auto pt-20 pb-12 md:pt-24 md:pb-16">
           <div className="text-center space-y-8 mb-16 px-3 md:px-5 max-w-2xl mx-auto">
             <div className="space-y-4">
@@ -218,6 +220,7 @@ const About = () => {
       </main>
 
       <PortfolioFooter />
+      </PageTransition>
     </>
   );
 };
