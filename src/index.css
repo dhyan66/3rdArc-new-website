@@ -14,6 +14,7 @@ All colors MUST be HSL.
   body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    contain: layout style paint;
   }
 
   :root {
@@ -104,6 +105,20 @@ All colors MUST be HSL.
     contain-intrinsic-size: 270px 200px;
     contain: layout paint style;
   }
+
+  /* Prevent layout shift from images */
+  picture,
+  img {
+    display: block;
+    content-visibility: auto;
+  }
+
+  /* Optimize video rendering */
+  video {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    will-change: auto;
+  }
 }
 
 @layer utilities {
@@ -127,6 +142,18 @@ All colors MUST be HSL.
 
   [data-rmiz-modal-img] {
     border-radius: 0.5rem;
+  }
+
+  /* Prevent CLS (Cumulative Layout Shift) */
+  .gallery-hover-container {
+    display: grid;
+    grid-auto-flow: dense;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  }
+
+  /* Optimize scrolling performance */
+  .gallery-hover-container * {
+    transform: translateZ(0);
   }
 }
 

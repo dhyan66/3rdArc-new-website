@@ -43,7 +43,7 @@ const PortfolioHeader = ({ activeCategory }: PortfolioHeaderProps) => {
   }, [mobileMenuOpen]);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-background" style={{ contain: 'layout style paint' }}>
       <div className="max-w-[1600px] mx-auto flex items-center justify-between md:justify-center px-3 md:px-5 py-3 gap-3">
         {/* Mobile Menu Button */}
         <button

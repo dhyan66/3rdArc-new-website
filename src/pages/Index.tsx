@@ -69,7 +69,7 @@ const Index = () => {
         activeCategory={activeCategory}
       />
       
-      <main>
+      <main style={{ contain: 'layout style paint' }}>
         <PhotographerBio />
 
         {error && (

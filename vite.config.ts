@@ -15,4 +15,23 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          'ui-vendor': ['motion/react', 'focus-trap-react'],
+        },
+      },
+    },
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+      },
+    },
+  },
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'react-router-dom', 'motion/react'],
+  },
 }));

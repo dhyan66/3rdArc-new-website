@@ -1,12 +1,14 @@
 const PhotographerBio = () => {
   return (
-    <section className="max-w-[1600px] mx-auto px-3 md:px-5 pt-20 pb-12 md:pt-24 md:pb-16">
+    <section className="max-w-[1600px] mx-auto px-3 md:px-5 pt-20 pb-12 md:pt-24 md:pb-16" style={{ contain: 'content' }}>
       <div className="space-y-4 text-center">
         <div className="flex justify-center mb-6">
           <img 
             src="/3rd-arc-logo.png" 
             alt="3rd Arc Productions" 
             className="h-32 md:h-40 w-auto"
+            loading="eager"
+            decoding="async"
           />
         </div>
         <h2 className="font-playfair text-4xl md:text-5xl text-foreground">

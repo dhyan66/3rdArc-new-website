@@ -81,7 +81,7 @@ const MasonryGallery = ({ images, onImageClick }: MasonryGalleryProps) => {
   }, [images]);
 
   return (
-    <div className="max-w-[1600px] mx-auto md:px-5 pb-16">
+    <div className="max-w-[1600px] mx-auto md:px-5 pb-16" style={{ contain: 'content' }}>
       <div className="gallery-hover-container text-center">
         {images.map((image, index) => (
           <button
@@ -89,8 +89,8 @@ const MasonryGallery = ({ images, onImageClick }: MasonryGalleryProps) => {
             onClick={() => onImageClick(index)}
             onMouseEnter={() => handleImageHover(index)}
             onMouseLeave={handleImageLeave}
-            className="relative cursor-zoom-in gallery-image inline-block align-top p-[3px] md:p-1 lg:p-1.5"
-            style={{ height: "270px" }}
+            className="relative cursor-zoom-in gallery-image inline-block align-top p-[3px] md:p-1 lg:p-1.5 will-change-transform"
+            style={{ height: "270px", contain: 'layout' }}
           >
             <div className="relative h-full overflow-hidden">
               {(() => {
