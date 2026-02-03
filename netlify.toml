@@ -1,7 +1,6 @@
 [build]
 command = "bun run build"
 publish = "dist"
-environment = { NODE_VERSION = "20" }
 
 [[redirects]]
 from = "/*"
