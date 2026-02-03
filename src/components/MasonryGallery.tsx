@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from "react";
 import { motion } from "motion/react";
-import { ProgressiveBlur } from "@/components/ui/progressive-blur";
 
 interface GalleryItem {
   type?: "image" | "video";
@@ -181,16 +180,6 @@ const MasonryGallery = ({ images, onImageClick }: MasonryGalleryProps) => {
                   </picture>
                 );
               })()}
-              <ProgressiveBlur
-                className="pointer-events-none absolute bottom-0 left-0 h-[80%] w-full"
-                blurIntensity={0.6}
-                animate={hoveredIndex === index ? "visible" : "hidden"}
-                variants={{
-                  hidden: { opacity: 0 },
-                  visible: { opacity: 1 },
-                }}
-                transition={{ duration: 0.2, ease: "easeOut" }}
-              />
               {image.photographer && image.client && (
                 <motion.div
                   className="absolute bottom-0 left-0 w-full pointer-events-none"
