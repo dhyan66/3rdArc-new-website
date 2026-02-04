@@ -234,11 +234,15 @@ All colors MUST be HSL.
   .gallery-hover-container {
     display: grid;
     grid-auto-flow: dense;
-    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
     /* Optimize for smooth scrolling */
     contain: layout style;
     /* Prevent expensive repaints */
     overflow-anchor: auto;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
   }
 
   /* Optimize scrolling performance */
@@ -254,7 +258,34 @@ All colors MUST be HSL.
     content-visibility: auto;
     contain: layout paint style;
     /* Prevent layout shifts */
-    contain-intrinsic-size: 270px 200px;
+    contain-intrinsic-size: 220px 220px;
+    aspect-ratio: 1;
+    height: auto;
+  }
+
+  /* Create a sophisticated masonry pattern */
+  /* Wide items (2 columns) */
+  .gallery-image:nth-child(2),
+  .gallery-image:nth-child(11),
+  .gallery-image:nth-child(20),
+  .gallery-image:nth-child(29) {
+    grid-column: span 2;
+  }
+
+  /* Tall items (2 rows) */
+  .gallery-image:nth-child(8),
+  .gallery-image:nth-child(17),
+  .gallery-image:nth-child(26) {
+    grid-row: span 2;
+  }
+
+  /* Large items (2x2) */
+  .gallery-image:nth-child(5),
+  .gallery-image:nth-child(14),
+  .gallery-image:nth-child(23),
+  .gallery-image:nth-child(32) {
+    grid-column: span 2;
+    grid-row: span 2;
   }
 }
 
