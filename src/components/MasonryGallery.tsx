@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo, memo } from "react";
 import { motion } from "motion/react";
 
 interface GalleryItem {
@@ -21,29 +21,29 @@ interface MasonryGalleryProps {
   onImageClick: (index: number) => void;
 }
 
-const MasonryGallery = ({ images, onImageClick }: MasonryGalleryProps) => {
+const MasonryGallery = memo(({ images, onImageClick }: MasonryGalleryProps) => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set());
+  const [visibleImages, setVisibleImages] = useState<Set<number>>(new Set());
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const videoRefs = useRef<Array<HTMLVideoElement | null>>([]);
+  const imageRefs = useRef<Array<HTMLElement | null>>([]);
 
   const handleImageLoad = (index: number) => {
     setLoadedImages((prev) => new Set(prev).add(index));
   };
 
-  const handleImageHover = (index: number) => {
-    setHoveredIndex(index);
-
-    // Clear existing timer
-    if (timerRef.current) {
-      clearTimeout(timerRef.current);
-    }
-
-    // Set new timer to reset after 2800ms
-    timerRef.current = setTimeout(() => {
-      setHoveredIndex(null);
-    }, 2800);
-  };
+  const handleImageHover = useMemo(() => {
+    return (index: number) => {
+      setHoveredIndex(index);
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+      timerRef.current = setTimeout(() => {
+        setHoveredIndex(null);
+      }, 2800);
+    };
+  }, []);
 
   const handleImageLeave = () => {
     // Don't reset hoveredIndex on mouse leave, let the timer handle it
@@ -58,63 +58,59 @@ const MasonryGallery = ({ images, onImageClick }: MasonryGalleryProps) => {
     };
   }, []);
 
+  // Intersection Observer for lazy loading and video autoplay
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const video = entry.target as HTMLVideoElement;
-          if (entry.isIntersecting) {
+    const observerOptions = {
+      root: null,
+      rootMargin: '100px',
+      threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const index = parseInt(entry.target.getAttribute('data-index') || '0');
+        
+        if (entry.isIntersecting) {
+          setVisibleImages(prev => new Set(prev).add(index));
+          const video = videoRefs.current[index];
+          if (video) {
             video.play().catch(() => undefined);
-          } else {
+          }
+        } else {
+          const video = videoRefs.current[index];
+          if (video) {
             video.pause();
           }
-        });
-      },
-      { rootMargin: "200px", threshold: 0.1 }
-    );
+        }
+      });
+    }, observerOptions);
 
-    videoRefs.current.forEach((video) => {
-      if (video) observer.observe(video);
+    imageRefs.current.forEach((ref) => {
+      if (ref) observer.observe(ref);
     });
 
     return () => observer.disconnect();
-  }, [images]);
+  }, [images.length]);
 
   return (
-    <div className="max-w-[1600px] mx-auto md:px-5 pb-16" style={{ contain: 'content', scrollBehavior: 'smooth' }}>
+    <div className="max-w-[1600px] mx-auto md:px-5 pb-16">
       <div className="gallery-hover-container text-center">
         {images.map((image, index) => (
           <button
-            key={index}
+            key={`${image.src}-${index}`}
+            ref={(el) => { imageRefs.current[index] = el; }}
+            data-index={index}
             onClick={() => onImageClick(index)}
             onMouseEnter={() => handleImageHover(index)}
             onMouseLeave={handleImageLeave}
             className="relative cursor-zoom-in gallery-image inline-block align-top will-change-transform"
-            style={{ contain: 'layout' }}
           >
-            <div className="relative h-full overflow-hidden w-full">
+            <div className="relative w-full overflow-hidden">
               {(() => {
-                const hasDimensions = Boolean(image.width && image.height);
                 if (image.type === "video") {
-                  const poster = image.src && !image.src.toLowerCase().endsWith(".mp4")
-                    ? image.src
-                    : undefined;
+                  const poster = image.src && image.src !== "" ? image.src : undefined;
                   return (
-                    <div className="relative h-full w-full">
-                      {hasDimensions && (
-                        <svg
-                          width={image.width}
-                          height={image.height}
-                          viewBox={`0 0 ${image.width} ${image.height}`}
-                          className="h-auto w-full"
-                        >
-                          <rect
-                            width={image.width}
-                            height={image.height}
-                            fill="white"
-                          />
-                        </svg>
-                      )}
+                    <div className="relative w-full">
                       <video
                         ref={(el) => {
                           videoRefs.current[index] = el;
@@ -125,16 +121,13 @@ const MasonryGallery = ({ images, onImageClick }: MasonryGalleryProps) => {
                         playsInline
                         preload="metadata"
                         disablePictureInPicture
+                        onLoadedMetadata={() => handleImageLoad(index)}
                         onCanPlayThrough={() => handleImageLoad(index)}
-                        className={`${hasDimensions ? "absolute top-0 left-0" : "block"} h-auto w-full object-contain transition-all duration-400 ${
+                        className={`block w-full h-auto object-contain transition-all duration-400 ${
                           hoveredIndex !== null && hoveredIndex !== index
                             ? "grayscale"
                             : ""
                         }`}
-                        style={{
-                          opacity: loadedImages.has(index) ? 1 : 0,
-                          transition: "opacity 0.4s ease-out",
-                        }}
                       >
                         <source src={image.videoSrc} type="video/mp4" />
                       </video>
@@ -148,25 +141,11 @@ const MasonryGallery = ({ images, onImageClick }: MasonryGalleryProps) => {
                       loadedImages.has(index) ? "show" : ""
                     }`}
                   >
-                    {hasDimensions && (
-                      <svg
-                        width={image.width}
-                        height={image.height}
-                        viewBox={`0 0 ${image.width} ${image.height}`}
-                        className="h-auto w-full"
-                      >
-                        <rect
-                          width={image.width}
-                          height={image.height}
-                          fill="white"
-                        />
-                      </svg>
-                    )}
                     <img
                       src={image.src}
                       alt={image.alt}
                       onLoad={() => handleImageLoad(index)}
-                      className={`${hasDimensions ? "absolute top-0 left-0" : "block"} h-auto w-full object-contain transition-all duration-400 ${
+                      className={`block h-auto w-full object-contain transition-all duration-400 ${
                         hoveredIndex !== null && hoveredIndex !== index
                           ? "grayscale"
                           : ""
@@ -207,6 +186,8 @@ const MasonryGallery = ({ images, onImageClick }: MasonryGalleryProps) => {
       </div>
     </div>
   );
-};
+});
+
+MasonryGallery.displayName = 'MasonryGallery';
 
 export default MasonryGallery;

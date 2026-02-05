@@ -13,12 +13,9 @@ All colors MUST be HSL.
     scroll-padding-top: 80px;
     /* Optimize scrolling performance */
     -webkit-overflow-scrolling: touch;
-    /* Reduce motion if user prefers */
-    scroll-snap-type: y proximity;
     /* Enable hardware acceleration */
-    transform: translateZ(0);
-    /* Improve scroll precision */
-    scroll-timeline: auto;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
     /* Better scrollbar styling for smooth appearance */
     scrollbar-width: thin;
     scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
@@ -27,22 +24,19 @@ All colors MUST be HSL.
   body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    contain: layout style paint;
     /* Enable momentum scrolling on iOS */
-    -webkit-font-smoothing: antialiased;
-    /* Prevent expensive repaints during scroll */
-    contain: layout style;
-    /* Optimize will-change for scrolling elements */
-    will-change: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   /* Optimize main scrolling container */
   main {
-    contain: layout style paint;
     /* Ensure smooth scroll propagation */
     scroll-behavior: inherit;
-    /* Optimize animation frames during scroll */
-    will-change: transform;
+  }
+
+  * {
+    /* Smooth scrolling on all elements */
+    scroll-behavior: smooth;
   }
 
   /* Chrome scrollbar styling */
@@ -234,13 +228,12 @@ All colors MUST be HSL.
   .gallery-hover-container {
     column-count: 2;
     column-gap: 8px;
-    /* Optimize for smooth scrolling */
-    contain: layout style;
-    /* Prevent expensive repaints */
-    overflow-anchor: auto;
     max-width: 1400px;
     margin: 0 auto;
     padding: 0 20px;
+    /* Enable GPU acceleration */
+    transform: translateZ(0);
+    will-change: scroll-position;
   }
 
   /* Tablet: 3 columns */
@@ -271,7 +264,6 @@ All colors MUST be HSL.
 
   /* Optimize scrolling performance */
   .gallery-hover-container * {
-    transform: translateZ(0);
     /* Prevent flickering during scroll */
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
@@ -279,8 +271,6 @@ All colors MUST be HSL.
 
   /* Optimize images for scroll performance */
   .gallery-image {
-    content-visibility: auto;
-    contain: layout paint style;
     width: 100%;
     display: block;
     margin: 0;
@@ -288,8 +278,17 @@ All colors MUST be HSL.
     margin-bottom: 8px;
     break-inside: avoid;
     page-break-inside: avoid;
+    /* GPU acceleration */
+    transform: translate3d(0, 0, 0);
     /* Prevent layout shifts */
     contain-intrinsic-size: 220px 220px;
+  }
+
+  .gallery-image img,
+  .gallery-image video {
+    /* Smooth image rendering */
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
   }
 
   @media (min-width: 640px) {

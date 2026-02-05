@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 import { useParams, Navigate } from "react-router-dom";
 import PortfolioHeader from "@/components/PortfolioHeader";
 import PhotographerBio from "@/components/PhotographerBio";
@@ -9,7 +9,7 @@ import Lightbox from "@/components/Lightbox";
 import SEO from "@/components/SEO";
 import { getLocalGalleryImages } from "@/services/local-gallery";
 
-const validCategories = ['selected', 'commissioned', 'editorial', 'personal', 'all'];
+const validCategories = ['selected', 'commissioned', 'editorial', 'personal', 'places', 'all'];
 
 const CategoryGallery = () => {
   const { category } = useParams<{ category: string }>();
@@ -30,7 +30,8 @@ const CategoryGallery = () => {
     try {
       setLoading(true);
       setError(null);
-      const items = getLocalGalleryImages(categoryUpper);
+      const items = getLocalGalleryImages(category);
+      console.log(`Loading ${category}:`, items.length, 'items');
       setImages(items);
     } catch (err) {
       console.error('Error loading local gallery images:', err);
@@ -38,7 +39,7 @@ const CategoryGallery = () => {
     } finally {
       setLoading(false);
     }
-  }, [categoryUpper]);
+  }, [category]);
 
   const handleImageClick = (index: number) => {
     setLightboxIndex(index);
