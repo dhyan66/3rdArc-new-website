@@ -14,7 +14,7 @@ All colors MUST be HSL.
     /* Optimize scrolling performance */
     -webkit-overflow-scrolling: touch;
     /* Enable hardware acceleration */
-    transform: translateZ(0);
+    transform: translate3d(0, 0, 0);
     backface-visibility: hidden;
     /* Better scrollbar styling for smooth appearance */
     scrollbar-width: thin;
@@ -26,16 +26,17 @@ All colors MUST be HSL.
     -moz-osx-font-smoothing: grayscale;
     /* Enable momentum scrolling on iOS */
     -webkit-overflow-scrolling: touch;
-    /* Optimize will-change for scrolling elements */
-    will-change: auto;
   }
 
   /* Optimize main scrolling container */
   main {
     /* Ensure smooth scroll propagation */
     scroll-behavior: inherit;
-    /* Optimize animation frames during scroll */
-    will-change: transform;
+  }
+
+  * {
+    /* Smooth scrolling on all elements */
+    scroll-behavior: smooth;
   }
 
   /* Chrome scrollbar styling */
@@ -278,10 +279,16 @@ All colors MUST be HSL.
     break-inside: avoid;
     page-break-inside: avoid;
     /* GPU acceleration */
-    transform: translateZ(0);
-    will-change: transform;
+    transform: translate3d(0, 0, 0);
     /* Prevent layout shifts */
     contain-intrinsic-size: 220px 220px;
+  }
+
+  .gallery-image img,
+  .gallery-image video {
+    /* Smooth image rendering */
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
   }
 
   @media (min-width: 640px) {

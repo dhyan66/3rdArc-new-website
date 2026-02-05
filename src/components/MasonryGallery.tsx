@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useMemo } from "react";
+import { useState, useEffect, useRef, useMemo, memo } from "react";
 import { motion } from "motion/react";
 
 interface GalleryItem {
@@ -21,7 +21,7 @@ interface MasonryGalleryProps {
   onImageClick: (index: number) => void;
 }
 
-const MasonryGallery = ({ images, onImageClick }: MasonryGalleryProps) => {
+const MasonryGallery = memo(({ images, onImageClick }: MasonryGalleryProps) => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set());
   const [visibleImages, setVisibleImages] = useState<Set<number>>(new Set());
@@ -186,6 +186,8 @@ const MasonryGallery = ({ images, onImageClick }: MasonryGalleryProps) => {
       </div>
     </div>
   );
-};
+});
+
+MasonryGallery.displayName = 'MasonryGallery';
 
 export default MasonryGallery;
