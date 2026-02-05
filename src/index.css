@@ -232,13 +232,41 @@ All colors MUST be HSL.
 
   /* Prevent CLS (Cumulative Layout Shift) */
   .gallery-hover-container {
-    display: grid;
-    grid-auto-flow: dense;
-    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    column-count: 2;
+    column-gap: 8px;
     /* Optimize for smooth scrolling */
     contain: layout style;
     /* Prevent expensive repaints */
     overflow-anchor: auto;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  /* Tablet: 3 columns */
+  @media (min-width: 640px) {
+    .gallery-hover-container {
+      column-count: 3;
+      column-gap: 10px;
+      padding: 0 30px;
+    }
+  }
+
+  /* Desktop: 4 columns */
+  @media (min-width: 1024px) {
+    .gallery-hover-container {
+      column-count: 4;
+      column-gap: 12px;
+      padding: 0 40px;
+    }
+  }
+
+  /* Large Desktop: 5 columns */
+  @media (min-width: 1280px) {
+    .gallery-hover-container {
+      column-count: 5;
+      column-gap: 15px;
+    }
   }
 
   /* Optimize scrolling performance */
@@ -253,8 +281,33 @@ All colors MUST be HSL.
   .gallery-image {
     content-visibility: auto;
     contain: layout paint style;
+    width: 100%;
+    display: block;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 8px;
+    break-inside: avoid;
+    page-break-inside: avoid;
     /* Prevent layout shifts */
-    contain-intrinsic-size: 270px 200px;
+    contain-intrinsic-size: 220px 220px;
+  }
+
+  @media (min-width: 640px) {
+    .gallery-image {
+      margin-bottom: 10px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .gallery-image {
+      margin-bottom: 12px;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .gallery-image {
+      margin-bottom: 15px;
+    }
   }
 }
 

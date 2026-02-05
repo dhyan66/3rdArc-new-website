@@ -13,6 +13,7 @@ const categories = [
   "COMMISSIONED",
   "EDITORIAL",
   "PERSONAL",
+  "PLACES",
 ];
 
 const PortfolioHeader = ({ activeCategory }: PortfolioHeaderProps) => {

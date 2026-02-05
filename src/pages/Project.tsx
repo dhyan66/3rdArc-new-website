@@ -6,12 +6,10 @@ import SEO from "@/components/SEO";
 
 import alpine1 from "@/assets/gallery/selected/DSC02365.jpg";
 import alpine2 from "@/assets/gallery/selected/DSC02377.jpg";
-import alpine3 from "@/assets/gallery/selected/DSC02408.jpg";
-import alpine4 from "@/assets/gallery/selected/DSC02446-2.jpg";
-import alpine5 from "@/assets/gallery/selected/DSC03919.jpg";
-import alpine6 from "@/assets/gallery/selected/DSC06316.jpg";
-import alpine7 from "@/assets/gallery/selected/DSC06321.jpg";
-import alpine8 from "@/assets/gallery/selected/DSC07525.png";
+import alpine3 from "@/assets/gallery/selected/DSC02446-2.jpg";
+import alpine4 from "@/assets/gallery/selected/DSC03919.jpg";
+import alpine5 from "@/assets/gallery/selected/DSC06316.jpg";
+import alpine6 from "@/assets/gallery/selected/DSC07525.png";
 
 const projectImages = [
   { src: alpine1, caption: "First Light on Summit Ridge" },
@@ -20,8 +18,6 @@ const projectImages = [
   { src: alpine4, caption: "Glacial Lake" },
   { src: alpine5, caption: "Ridge Line" },
   { src: alpine6, caption: "Morning Reflection" },
-  { src: alpine7, caption: "Alpine Stream" },
-  { src: alpine8, caption: "Golden Hour Peak" },
 ];
 
 const Project = () => {
