@@ -92,29 +92,12 @@ const MasonryGallery = ({ images, onImageClick }: MasonryGalleryProps) => {
             className="relative cursor-zoom-in gallery-image inline-block align-top will-change-transform"
             style={{ contain: 'layout' }}
           >
-            <div className="relative h-full overflow-hidden w-full">
+            <div className="relative w-full overflow-hidden">
               {(() => {
-                const hasDimensions = Boolean(image.width && image.height);
                 if (image.type === "video") {
-                  const poster = image.src && !image.src.toLowerCase().endsWith(".mp4")
-                    ? image.src
-                    : undefined;
+                  const poster = image.src && image.src !== "" ? image.src : undefined;
                   return (
-                    <div className="relative h-full w-full">
-                      {hasDimensions && (
-                        <svg
-                          width={image.width}
-                          height={image.height}
-                          viewBox={`0 0 ${image.width} ${image.height}`}
-                          className="h-auto w-full"
-                        >
-                          <rect
-                            width={image.width}
-                            height={image.height}
-                            fill="white"
-                          />
-                        </svg>
-                      )}
+                    <div className="relative w-full">
                       <video
                         ref={(el) => {
                           videoRefs.current[index] = el;
@@ -125,16 +108,13 @@ const MasonryGallery = ({ images, onImageClick }: MasonryGalleryProps) => {
                         playsInline
                         preload="metadata"
                         disablePictureInPicture
+                        onLoadedMetadata={() => handleImageLoad(index)}
                         onCanPlayThrough={() => handleImageLoad(index)}
-                        className={`${hasDimensions ? "absolute top-0 left-0" : "block"} h-auto w-full object-contain transition-all duration-400 ${
+                        className={`block w-full h-auto object-contain transition-all duration-400 ${
                           hoveredIndex !== null && hoveredIndex !== index
                             ? "grayscale"
                             : ""
                         }`}
-                        style={{
-                          opacity: loadedImages.has(index) ? 1 : 0,
-                          transition: "opacity 0.4s ease-out",
-                        }}
                       >
                         <source src={image.videoSrc} type="video/mp4" />
                       </video>
@@ -148,25 +128,11 @@ const MasonryGallery = ({ images, onImageClick }: MasonryGalleryProps) => {
                       loadedImages.has(index) ? "show" : ""
                     }`}
                   >
-                    {hasDimensions && (
-                      <svg
-                        width={image.width}
-                        height={image.height}
-                        viewBox={`0 0 ${image.width} ${image.height}`}
-                        className="h-auto w-full"
-                      >
-                        <rect
-                          width={image.width}
-                          height={image.height}
-                          fill="white"
-                        />
-                      </svg>
-                    )}
                     <img
                       src={image.src}
                       alt={image.alt}
                       onLoad={() => handleImageLoad(index)}
-                      className={`${hasDimensions ? "absolute top-0 left-0" : "block"} h-auto w-full object-contain transition-all duration-400 ${
+                      className={`block h-auto w-full object-contain transition-all duration-400 ${
                         hoveredIndex !== null && hoveredIndex !== index
                           ? "grayscale"
                           : ""

@@ -59,7 +59,7 @@ const buildItems = () => {
     return {
       category,
       item: {
-        src: poster || src,
+        src: poster || "",
         videoSrc: src,
         alt: normalizeAlt(filename),
         type: "video" as const,
