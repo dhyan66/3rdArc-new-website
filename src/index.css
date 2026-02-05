@@ -232,10 +232,8 @@ All colors MUST be HSL.
 
   /* Prevent CLS (Cumulative Layout Shift) */
   .gallery-hover-container {
-    display: grid;
-    grid-auto-flow: dense;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 20px;
+    column-count: 2;
+    column-gap: 8px;
     /* Optimize for smooth scrolling */
     contain: layout style;
     /* Prevent expensive repaints */
@@ -243,6 +241,32 @@ All colors MUST be HSL.
     max-width: 1400px;
     margin: 0 auto;
     padding: 0 20px;
+  }
+
+  /* Tablet: 3 columns */
+  @media (min-width: 640px) {
+    .gallery-hover-container {
+      column-count: 3;
+      column-gap: 10px;
+      padding: 0 30px;
+    }
+  }
+
+  /* Desktop: 4 columns */
+  @media (min-width: 1024px) {
+    .gallery-hover-container {
+      column-count: 4;
+      column-gap: 12px;
+      padding: 0 40px;
+    }
+  }
+
+  /* Large Desktop: 5 columns */
+  @media (min-width: 1280px) {
+    .gallery-hover-container {
+      column-count: 5;
+      column-gap: 15px;
+    }
   }
 
   /* Optimize scrolling performance */
@@ -257,35 +281,33 @@ All colors MUST be HSL.
   .gallery-image {
     content-visibility: auto;
     contain: layout paint style;
+    width: 100%;
+    display: block;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 8px;
+    break-inside: avoid;
+    page-break-inside: avoid;
     /* Prevent layout shifts */
     contain-intrinsic-size: 220px 220px;
-    aspect-ratio: 1;
-    height: auto;
   }
 
-  /* Create a sophisticated masonry pattern */
-  /* Wide items (2 columns) */
-  .gallery-image:nth-child(2),
-  .gallery-image:nth-child(11),
-  .gallery-image:nth-child(20),
-  .gallery-image:nth-child(29) {
-    grid-column: span 2;
+  @media (min-width: 640px) {
+    .gallery-image {
+      margin-bottom: 10px;
+    }
   }
 
-  /* Tall items (2 rows) */
-  .gallery-image:nth-child(8),
-  .gallery-image:nth-child(17),
-  .gallery-image:nth-child(26) {
-    grid-row: span 2;
+  @media (min-width: 1024px) {
+    .gallery-image {
+      margin-bottom: 12px;
+    }
   }
 
-  /* Large items (2x2) */
-  .gallery-image:nth-child(5),
-  .gallery-image:nth-child(14),
-  .gallery-image:nth-child(23),
-  .gallery-image:nth-child(32) {
-    grid-column: span 2;
-    grid-row: span 2;
+  @media (min-width: 1280px) {
+    .gallery-image {
+      margin-bottom: 15px;
+    }
   }
 }
 

@@ -92,7 +92,7 @@ const MasonryGallery = ({ images, onImageClick }: MasonryGalleryProps) => {
             className="relative cursor-zoom-in gallery-image inline-block align-top will-change-transform"
             style={{ contain: 'layout' }}
           >
-            <div className="relative h-full overflow-hidden">
+            <div className="relative h-full overflow-hidden w-full">
               {(() => {
                 const hasDimensions = Boolean(image.width && image.height);
                 if (image.type === "video") {
@@ -100,13 +100,13 @@ const MasonryGallery = ({ images, onImageClick }: MasonryGalleryProps) => {
                     ? image.src
                     : undefined;
                   return (
-                    <div className="relative h-full w-auto inline-block">
+                    <div className="relative h-full w-full">
                       {hasDimensions && (
                         <svg
                           width={image.width}
                           height={image.height}
                           viewBox={`0 0 ${image.width} ${image.height}`}
-                          className="h-full w-auto"
+                          className="h-auto w-full"
                         >
                           <rect
                             width={image.width}
@@ -126,7 +126,7 @@ const MasonryGallery = ({ images, onImageClick }: MasonryGalleryProps) => {
                         preload="metadata"
                         disablePictureInPicture
                         onCanPlayThrough={() => handleImageLoad(index)}
-                        className={`${hasDimensions ? "absolute top-0 left-0" : "block"} h-full w-auto object-contain transition-all duration-400 ${
+                        className={`${hasDimensions ? "absolute top-0 left-0" : "block"} h-auto w-full object-contain transition-all duration-400 ${
                           hoveredIndex !== null && hoveredIndex !== index
                             ? "grayscale"
                             : ""
@@ -144,7 +144,7 @@ const MasonryGallery = ({ images, onImageClick }: MasonryGalleryProps) => {
 
                 return (
                   <picture
-                    className={`inline-block h-full w-auto ${
+                    className={`block w-full h-auto ${
                       loadedImages.has(index) ? "show" : ""
                     }`}
                   >
@@ -153,7 +153,7 @@ const MasonryGallery = ({ images, onImageClick }: MasonryGalleryProps) => {
                         width={image.width}
                         height={image.height}
                         viewBox={`0 0 ${image.width} ${image.height}`}
-                        className="h-full w-auto"
+                        className="h-auto w-full"
                       >
                         <rect
                           width={image.width}
@@ -166,7 +166,7 @@ const MasonryGallery = ({ images, onImageClick }: MasonryGalleryProps) => {
                       src={image.src}
                       alt={image.alt}
                       onLoad={() => handleImageLoad(index)}
-                      className={`${hasDimensions ? "absolute top-0 left-0" : "block"} h-full w-auto object-contain transition-all duration-400 ${
+                      className={`${hasDimensions ? "absolute top-0 left-0" : "block"} h-auto w-full object-contain transition-all duration-400 ${
                         hoveredIndex !== null && hoveredIndex !== index
                           ? "grayscale"
                           : ""
