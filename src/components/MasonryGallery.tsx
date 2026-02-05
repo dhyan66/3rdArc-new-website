@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { motion } from "motion/react";
 
 interface GalleryItem {
@@ -24,26 +24,26 @@ interface MasonryGalleryProps {
 const MasonryGallery = ({ images, onImageClick }: MasonryGalleryProps) => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set());
+  const [visibleImages, setVisibleImages] = useState<Set<number>>(new Set());
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const videoRefs = useRef<Array<HTMLVideoElement | null>>([]);
+  const imageRefs = useRef<Array<HTMLElement | null>>([]);
 
   const handleImageLoad = (index: number) => {
     setLoadedImages((prev) => new Set(prev).add(index));
   };
 
-  const handleImageHover = (index: number) => {
-    setHoveredIndex(index);
-
-    // Clear existing timer
-    if (timerRef.current) {
-      clearTimeout(timerRef.current);
-    }
-
-    // Set new timer to reset after 2800ms
-    timerRef.current = setTimeout(() => {
-      setHoveredIndex(null);
-    }, 2800);
-  };
+  const handleImageHover = useMemo(() => {
+    return (index: number) => {
+      setHoveredIndex(index);
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+      timerRef.current = setTimeout(() => {
+        setHoveredIndex(null);
+      }, 2800);
+    };
+  }, []);
 
   const handleImageLeave = () => {
     // Don't reset hoveredIndex on mouse leave, let the timer handle it
@@ -58,39 +58,52 @@ const MasonryGallery = ({ images, onImageClick }: MasonryGalleryProps) => {
     };
   }, []);
 
+  // Intersection Observer for lazy loading and video autoplay
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const video = entry.target as HTMLVideoElement;
-          if (entry.isIntersecting) {
+    const observerOptions = {
+      root: null,
+      rootMargin: '100px',
+      threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const index = parseInt(entry.target.getAttribute('data-index') || '0');
+        
+        if (entry.isIntersecting) {
+          setVisibleImages(prev => new Set(prev).add(index));
+          const video = videoRefs.current[index];
+          if (video) {
             video.play().catch(() => undefined);
-          } else {
+          }
+        } else {
+          const video = videoRefs.current[index];
+          if (video) {
             video.pause();
           }
-        });
-      },
-      { rootMargin: "200px", threshold: 0.1 }
-    );
+        }
+      });
+    }, observerOptions);
 
-    videoRefs.current.forEach((video) => {
-      if (video) observer.observe(video);
+    imageRefs.current.forEach((ref) => {
+      if (ref) observer.observe(ref);
     });
 
     return () => observer.disconnect();
-  }, [images]);
+  }, [images.length]);
 
   return (
-    <div className="max-w-[1600px] mx-auto md:px-5 pb-16" style={{ contain: 'content', scrollBehavior: 'smooth' }}>
+    <div className="max-w-[1600px] mx-auto md:px-5 pb-16">
       <div className="gallery-hover-container text-center">
         {images.map((image, index) => (
           <button
-            key={index}
+            key={`${image.src}-${index}`}
+            ref={(el) => { imageRefs.current[index] = el; }}
+            data-index={index}
             onClick={() => onImageClick(index)}
             onMouseEnter={() => handleImageHover(index)}
             onMouseLeave={handleImageLeave}
             className="relative cursor-zoom-in gallery-image inline-block align-top will-change-transform"
-            style={{ contain: 'layout' }}
           >
             <div className="relative w-full overflow-hidden">
               {(() => {
