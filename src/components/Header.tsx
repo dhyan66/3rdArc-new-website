@@ -58,7 +58,7 @@ const Header = () => {
             <Instagram className="w-6 h-6" />
           </a>
           <a
-            href="mailto:contact@3rdarcproductions.com"
+            href="mailto:3rdarcproductions@gmail.com"
             className="hover:opacity-60 transition-opacity duration-300 p-2 -m-2 inline-flex items-center justify-center"
             aria-label="Send us an email"
           >
