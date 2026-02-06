@@ -8,11 +8,12 @@ All colors MUST be HSL.
 
 @layer base {
   html {
-    scroll-behavior: smooth;
+    /* Disable smooth scroll for better performance */
+    scroll-behavior: auto;
     /* GPU acceleration for smooth scrolling */
     scroll-padding-top: 80px;
     /* Optimize scrolling performance */
-    -webkit-overflow-scrolling: touch;
+    -webkit-overflow-scrolling: auto;
     /* Enable hardware acceleration */
     transform: translate3d(0, 0, 0);
     backface-visibility: hidden;
@@ -175,15 +176,15 @@ All colors MUST be HSL.
 
   /* Smooth loading animations */
   .animate-fade-in-smooth {
-    animation: fade-in-smooth 0.6s ease-out;
+    animation: fade-in-smooth 0.3s ease-out; /* Reduced from 0.6s */
   }
 
   .animate-slide-up-smooth {
-    animation: slide-up-smooth 0.6s ease-out;
+    animation: slide-up-smooth 0.3s ease-out; /* Reduced from 0.6s */
   }
 
-  .animate-skeleton {
-    animation: skeleton-loading 1.5s infinite;
+  .skeleton {
+    animation: skeleton-loading 1s infinite; /* Reduced from 1.5s */
   }
 
   /* Optimization for loading states */

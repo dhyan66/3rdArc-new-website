@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import FocusTrap from "focus-trap-react";
@@ -11,7 +11,6 @@ interface PortfolioHeaderProps {
 const categories = [
   "SELECTED",
   "COMMISSIONED",
-  "EDITORIAL",
   "PERSONAL",
   "PLACES",
 ];
@@ -19,6 +18,11 @@ const categories = [
 const PortfolioHeader = ({ activeCategory }: PortfolioHeaderProps) => {
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const handleOpenMenu = useCallback(() => setMobileMenuOpen(true), []);
+  const handleCloseMenu = useCallback(() => setMobileMenuOpen(false), []);
+  const handleMouseEnter = useCallback((item: string) => setHoveredItem(item), []);
+  const handleMouseLeave = useCallback(() => setHoveredItem(null), []);
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
@@ -49,7 +53,7 @@ const PortfolioHeader = ({ activeCategory }: PortfolioHeaderProps) => {
         <div className="max-w-[1600px] mx-auto flex items-center justify-between md:justify-center px-3 md:px-5 py-3 gap-3">
           {/* Mobile Menu Button */}
           <button
-            onClick={() => setMobileMenuOpen(true)}
+            onClick={handleOpenMenu}
             className="md:hidden p-2 text-foreground/70 hover:text-foreground transition-colors"
             aria-label="Open navigation menu"
             aria-expanded={mobileMenuOpen}
@@ -71,8 +75,8 @@ const PortfolioHeader = ({ activeCategory }: PortfolioHeaderProps) => {
             <Link
               key={category}
               to={`/category/${category.toLowerCase()}`}
-              onMouseEnter={() => setHoveredItem(category)}
-              onMouseLeave={() => setHoveredItem(null)}
+              onMouseEnter={() => handleMouseEnter(category)}
+              onMouseLeave={handleMouseLeave}
               className={`text-[10px] md:text-[11px] uppercase tracking-widest font-inter transition-colors whitespace-nowrap ${
                 activeCategory === category
                   ? "text-foreground font-medium"
@@ -92,8 +96,8 @@ const PortfolioHeader = ({ activeCategory }: PortfolioHeaderProps) => {
           <Link
             to="/about"
             className="text-[10px] md:text-[11px] uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors font-inter whitespace-nowrap"
-            onMouseEnter={() => setHoveredItem('about')}
-            onMouseLeave={() => setHoveredItem(null)}
+            onMouseEnter={() => handleMouseEnter('about')}
+            onMouseLeave={handleMouseLeave}
           >
             {hoveredItem === 'about' ? (
               <TextRoll duration={0.3} getEnterDelay={(i) => i * 0.02} getExitDelay={(i) => i * 0.02}>
@@ -120,7 +124,7 @@ const PortfolioHeader = ({ activeCategory }: PortfolioHeaderProps) => {
             {/* Close Button */}
             <div className="flex justify-end p-5 border-b border-border/50 bg-background">
               <button
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={handleCloseMenu}
                 className="p-2 text-foreground hover:text-foreground/70 transition-colors"
                 aria-label="Close navigation menu"
               >
@@ -135,7 +139,7 @@ const PortfolioHeader = ({ activeCategory }: PortfolioHeaderProps) => {
                 <Link
                   key={category}
                   to={`/category/${category.toLowerCase()}`}
-                  onClick={() => setMobileMenuOpen(false)}
+                  onClick={handleCloseMenu}
                   className={`text-lg uppercase tracking-widest font-inter transition-colors ${
                     activeCategory === category
                       ? "text-foreground font-semibold"
@@ -152,7 +156,7 @@ const PortfolioHeader = ({ activeCategory }: PortfolioHeaderProps) => {
               {/* Page Links */}
               <Link
                 to="/about"
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={handleCloseMenu}
                 className="text-lg uppercase tracking-widest text-foreground/70 hover:text-foreground transition-colors font-inter"
               >
                 ABOUT
