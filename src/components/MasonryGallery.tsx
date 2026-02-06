@@ -1,5 +1,4 @@
-import { useState, useEffect, useRef, useMemo, memo } from "react";
-import { motion } from "motion/react";
+import { useState, useEffect, useRef, useMemo, memo, useCallback } from "react";
 
 interface GalleryItem {
   type?: "image" | "video";
@@ -33,16 +32,14 @@ const MasonryGallery = memo(({ images, onImageClick }: MasonryGalleryProps) => {
     setLoadedImages((prev) => new Set(prev).add(index));
   };
 
-  const handleImageHover = useMemo(() => {
-    return (index: number) => {
-      setHoveredIndex(index);
-      if (timerRef.current) {
-        clearTimeout(timerRef.current);
-      }
-      timerRef.current = setTimeout(() => {
-        setHoveredIndex(null);
-      }, 2800);
-    };
+  const handleImageHover = useCallback((index: number) => {
+    setHoveredIndex(index);
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+    timerRef.current = setTimeout(() => {
+      setHoveredIndex(null);
+    }, 2800);
   }, []);
 
   const handleImageLeave = () => {
@@ -161,14 +158,10 @@ const MasonryGallery = memo(({ images, onImageClick }: MasonryGalleryProps) => {
                 );
               })()}
               {image.photographer && image.client && (
-                <motion.div
-                  className="absolute bottom-0 left-0 w-full pointer-events-none"
-                  animate={hoveredIndex === index ? "visible" : "hidden"}
-                  variants={{
-                    hidden: { opacity: 0 },
-                    visible: { opacity: 1 },
-                  }}
-                  transition={{ duration: 0.2, ease: "easeOut" }}
+                <div
+                  className={`absolute bottom-0 left-0 w-full pointer-events-none transition-opacity duration-200 ${
+                    hoveredIndex === index ? 'opacity-100' : 'opacity-0'
+                  }`}
                 >
                   <div className="flex flex-col items-center gap-0 px-4 py-3 text-center">
                     <p className="text-base font-medium text-white">
@@ -178,7 +171,7 @@ const MasonryGallery = memo(({ images, onImageClick }: MasonryGalleryProps) => {
                       Shot in {image.location}. {image.details}.
                     </span>
                   </div>
-                </motion.div>
+                </div>
               )}
             </div>
           </button>
