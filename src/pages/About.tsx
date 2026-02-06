@@ -86,15 +86,6 @@ const About = () => {
                 PROFESSIONAL VIDEOGRAPHY & CREATIVE PRODUCTION
               </p>
             </div>
-
-            {/* Portrait */}
-            <div className="max-w-md mx-auto border border-foreground/10 overflow-hidden">
-              <img
-                src="/Owners.png"
-                alt="3rd Arc Productions Team"
-                className="w-full h-auto"
-              />
-            </div>
           </div>
 
           {/* Bio Section */}
