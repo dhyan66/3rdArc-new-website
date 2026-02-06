@@ -15,4 +15,31 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          'ui-vendor': ['motion/react', 'focus-trap-react'],
+          'query': ['@tanstack/react-query'],
+        },
+      },
+    },
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+      },
+    },
+    // Optimize CSS
+    cssCodeSplit: true,
+    // Target modern browsers
+    target: 'es2020',
+  },
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'react-router-dom', 'motion/react', '@tanstack/react-query'],
+    esbuildOptions: {
+      target: 'es2020',
+    },
+  },
 }));

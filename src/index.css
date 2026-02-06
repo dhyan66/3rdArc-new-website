@@ -7,6 +7,60 @@ All colors MUST be HSL.
 */
 
 @layer base {
+  html {
+    /* Disable smooth scroll for better performance */
+    scroll-behavior: auto;
+    /* GPU acceleration for smooth scrolling */
+    scroll-padding-top: 80px;
+    /* Optimize scrolling performance */
+    -webkit-overflow-scrolling: auto;
+    /* Enable hardware acceleration */
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    /* Better scrollbar styling for smooth appearance */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
+  }
+
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* Enable momentum scrolling on iOS */
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Optimize main scrolling container */
+  main {
+    /* Ensure smooth scroll propagation */
+    scroll-behavior: inherit;
+  }
+
+  * {
+    /* Smooth scrolling on all elements */
+    scroll-behavior: smooth;
+  }
+
+  /* Chrome scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.5);
+    background-clip: padding-box;
+  }
+
   :root {
     --background: 0 0% 100%;
     --foreground: 0 0% 10%;
@@ -89,6 +143,28 @@ All colors MUST be HSL.
   }
 }
 
+@layer components {
+  .gallery-image {
+    content-visibility: auto;
+    contain-intrinsic-size: 270px 200px;
+    contain: layout paint style;
+  }
+
+  /* Prevent layout shift from images */
+  picture,
+  img {
+    display: block;
+    content-visibility: auto;
+  }
+
+  /* Optimize video rendering */
+  video {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    will-change: auto;
+  }
+}
+
 @layer utilities {
   .animate-marquee-rtl {
     animation: marquee-rtl 40s linear infinite;
@@ -96,6 +172,43 @@ All colors MUST be HSL.
   
   .animate-marquee-rtl:hover {
     animation-play-state: paused;
+  }
+
+  /* Smooth loading animations */
+  .animate-fade-in-smooth {
+    animation: fade-in-smooth 0.3s ease-out; /* Reduced from 0.6s */
+  }
+
+  .animate-slide-up-smooth {
+    animation: slide-up-smooth 0.3s ease-out; /* Reduced from 0.6s */
+  }
+
+  .skeleton {
+    animation: skeleton-loading 1s infinite; /* Reduced from 1.5s */
+  }
+
+  /* Optimization for loading states */
+  .loading-skeleton {
+    @apply animate-skeleton rounded bg-muted;
+  }
+
+  /* Smooth scrolling optimization */
+  .scroll-smooth {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* GPU-accelerated scrolling */
+  .scroll-gpu {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  /* Optimize scrollable containers */
+  .scrollable-container {
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
   }
 
   /* Custom styles for react-medium-image-zoom dark mode support */
@@ -111,6 +224,91 @@ All colors MUST be HSL.
   [data-rmiz-modal-img] {
     border-radius: 0.5rem;
   }
+
+  /* Prevent CLS (Cumulative Layout Shift) */
+  .gallery-hover-container {
+    column-count: 2;
+    column-gap: 8px;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+    /* Enable GPU acceleration */
+    transform: translateZ(0);
+    will-change: scroll-position;
+  }
+
+  /* Tablet: 3 columns */
+  @media (min-width: 640px) {
+    .gallery-hover-container {
+      column-count: 3;
+      column-gap: 10px;
+      padding: 0 30px;
+    }
+  }
+
+  /* Desktop: 4 columns */
+  @media (min-width: 1024px) {
+    .gallery-hover-container {
+      column-count: 4;
+      column-gap: 12px;
+      padding: 0 40px;
+    }
+  }
+
+  /* Large Desktop: 5 columns */
+  @media (min-width: 1280px) {
+    .gallery-hover-container {
+      column-count: 5;
+      column-gap: 15px;
+    }
+  }
+
+  /* Optimize scrolling performance */
+  .gallery-hover-container * {
+    /* Prevent flickering during scroll */
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  /* Optimize images for scroll performance */
+  .gallery-image {
+    width: 100%;
+    display: block;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 8px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+    /* GPU acceleration */
+    transform: translate3d(0, 0, 0);
+    /* Prevent layout shifts */
+    contain-intrinsic-size: 220px 220px;
+  }
+
+  .gallery-image img,
+  .gallery-image video {
+    /* Smooth image rendering */
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+
+  @media (min-width: 640px) {
+    .gallery-image {
+      margin-bottom: 10px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .gallery-image {
+      margin-bottom: 12px;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .gallery-image {
+      margin-bottom: 15px;
+    }
+  }
 }
 
 @keyframes marquee-rtl {
@@ -122,6 +320,35 @@ All colors MUST be HSL.
   }
 }
 
+@keyframes fade-in-smooth {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-up-smooth {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes skeleton-loading {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
 @layer base {
   * {
     @apply border-border;
@@ -129,6 +356,12 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground font-inter;
+    animation: fade-in-smooth 0.8s ease-out;
+  }
+
+  /* Smooth transitions on route changes */
+  main {
+    animation: fade-in-smooth 0.5s ease-out;
   }
 
   /* Global focus styles for keyboard navigation */
