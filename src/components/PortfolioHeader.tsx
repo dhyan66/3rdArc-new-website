@@ -11,7 +11,6 @@ interface PortfolioHeaderProps {
 const categories = [
   "SELECTED",
   "COMMISSIONED",
-  "EDITORIAL",
   "PERSONAL",
   "PLACES",
 ];
