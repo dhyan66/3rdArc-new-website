@@ -3,10 +3,10 @@ const PortfolioFooter = () => {
     <footer className="max-w-[1600px] mx-auto px-3 md:px-5 pb-16">
       <div className="text-center text-[10px] uppercase tracking-widest font-inter text-muted-foreground">
         <a
-          href="mailto:3rdarc@gmail.com"
+          href="mailto:3rdarcproductions@gmail.com"
           className="hover:text-foreground transition-colors"
         >
-          E: 3rdarc@gmail.com
+          E: 3rdarcproductions@gmail.com
         </a>
         <span className="mx-2">/</span>
         <a
