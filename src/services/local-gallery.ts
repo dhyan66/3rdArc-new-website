@@ -1,11 +1,17 @@
 export interface LocalGalleryItem {
-  type?: "image";
+  type?: "image" | "video";
   src: string;
   alt: string;
+  videoSrc?: string;
 }
 
-const galleryModules = import.meta.glob(
+const imageModules = import.meta.glob(
   "../assets/gallery/**/*.{jpg,jpeg,png,webp}",
+  { eager: true, import: "default" }
+) as Record<string, string>;
+
+const videoModules = import.meta.glob(
+  "../assets/gallery/**/*.{mp4,webm,ogg}",
   { eager: true, import: "default" }
 ) as Record<string, string>;
 
@@ -20,8 +26,10 @@ const getCategoryFromPath = (path: string) => {
   return parts[parts.length - 2]?.toLowerCase() || "";
 };
 
+const stripExtension = (filename: string) => filename.replace(/\.[^/.]+$/, "");
+
 const buildItems = () => {
-  const entries = Object.entries(galleryModules).map(([path, src]) => {
+  const imageEntries = Object.entries(imageModules).map(([path, src]) => {
     const filename = path.split("/").pop() || "image";
     return {
       category: getCategoryFromPath(path),
@@ -31,8 +39,38 @@ const buildItems = () => {
         type: "image" as const,
       },
       filename,
+      baseName: stripExtension(filename),
+      path,
     };
   });
+
+  const imageByKey = new Map(
+    imageEntries.map((entry) => [
+      `${entry.category}/${entry.baseName}`.toLowerCase(),
+      entry.item.src,
+    ])
+  );
+
+  const videoEntries = Object.entries(videoModules).map(([path, src]) => {
+    const filename = path.split("/").pop() || "video";
+    const category = getCategoryFromPath(path);
+    const baseName = stripExtension(filename);
+    const poster = imageByKey.get(`${category}/${baseName}`.toLowerCase());
+    return {
+      category,
+      item: {
+        src: poster || "",
+        videoSrc: src,
+        alt: normalizeAlt(filename),
+        type: "video" as const,
+      },
+      filename,
+      baseName,
+      path,
+    };
+  });
+
+  const entries = [...imageEntries, ...videoEntries];
 
   const byCategory: Record<string, LocalGalleryItem[]> = {};
 

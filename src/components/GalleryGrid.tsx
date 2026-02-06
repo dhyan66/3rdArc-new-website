@@ -11,12 +11,13 @@ interface GalleryGridProps {
 
 const GalleryGrid = ({ images }: GalleryGridProps) => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 lg:gap-16 w-full px-8 py-20 animate-fade-in">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 lg:gap-16 w-full px-8 py-20 animate-fade-in" style={{ contain: 'content' }}>
       {images.map((image, index) => (
         <div
           key={index}
-          className="overflow-hidden flex justify-center"
-        >
+          className="overflow-hidden flex justify-center"          style={{
+            animation: `slide-up-smooth 0.6s ease-out ${index * 0.05}s both`,
+          }}        >
           <ImageZoom
             src={image.src}
             alt={image.alt}

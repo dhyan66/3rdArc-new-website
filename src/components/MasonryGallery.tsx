@@ -1,6 +1,4 @@
-import { useState, useEffect, useRef } from "react";
-import { motion } from "motion/react";
-import { ProgressiveBlur } from "@/components/ui/progressive-blur";
+import { useState, useEffect, useRef, useMemo, memo, useCallback } from "react";
 
 interface GalleryItem {
   type?: "image" | "video";
@@ -22,28 +20,27 @@ interface MasonryGalleryProps {
   onImageClick: (index: number) => void;
 }
 
-const MasonryGallery = ({ images, onImageClick }: MasonryGalleryProps) => {
+const MasonryGallery = memo(({ images, onImageClick }: MasonryGalleryProps) => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set());
+  const [visibleImages, setVisibleImages] = useState<Set<number>>(new Set());
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const videoRefs = useRef<Array<HTMLVideoElement | null>>([]);
+  const imageRefs = useRef<Array<HTMLElement | null>>([]);
 
   const handleImageLoad = (index: number) => {
     setLoadedImages((prev) => new Set(prev).add(index));
   };
 
-  const handleImageHover = (index: number) => {
+  const handleImageHover = useCallback((index: number) => {
     setHoveredIndex(index);
-
-    // Clear existing timer
     if (timerRef.current) {
       clearTimeout(timerRef.current);
     }
-
-    // Set new timer to reset after 2800ms
     timerRef.current = setTimeout(() => {
       setHoveredIndex(null);
     }, 2800);
-  };
+  }, []);
 
   const handleImageLeave = () => {
     // Don't reset hoveredIndex on mouse leave, let the timer handle it
@@ -58,54 +55,76 @@ const MasonryGallery = ({ images, onImageClick }: MasonryGalleryProps) => {
     };
   }, []);
 
+  // Intersection Observer for lazy loading and video autoplay
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: '100px',
+      threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const index = parseInt(entry.target.getAttribute('data-index') || '0');
+        
+        if (entry.isIntersecting) {
+          setVisibleImages(prev => new Set(prev).add(index));
+          const video = videoRefs.current[index];
+          if (video) {
+            video.play().catch(() => undefined);
+          }
+        } else {
+          const video = videoRefs.current[index];
+          if (video) {
+            video.pause();
+          }
+        }
+      });
+    }, observerOptions);
+
+    imageRefs.current.forEach((ref) => {
+      if (ref) observer.observe(ref);
+    });
+
+    return () => observer.disconnect();
+  }, [images.length]);
+
   return (
     <div className="max-w-[1600px] mx-auto md:px-5 pb-16">
       <div className="gallery-hover-container text-center">
         {images.map((image, index) => (
           <button
-            key={index}
+            key={`${image.src}-${index}`}
+            ref={(el) => { imageRefs.current[index] = el; }}
+            data-index={index}
             onClick={() => onImageClick(index)}
             onMouseEnter={() => handleImageHover(index)}
             onMouseLeave={handleImageLeave}
-            className="relative cursor-zoom-in gallery-image inline-block align-top p-[3px] md:p-1 lg:p-1.5"
-            style={{ height: "270px" }}
+            className="relative cursor-zoom-in gallery-image inline-block align-top will-change-transform"
           >
-            <div className="relative h-full overflow-hidden">
+            <div className="relative w-full overflow-hidden">
               {(() => {
-                const hasDimensions = Boolean(image.width && image.height);
                 if (image.type === "video") {
+                  const poster = image.src && image.src !== "" ? image.src : undefined;
                   return (
-                    <div className="relative h-full w-auto inline-block">
-                      {hasDimensions && (
-                        <svg
-                          width={image.width}
-                          height={image.height}
-                          viewBox={`0 0 ${image.width} ${image.height}`}
-                          className="h-full w-auto"
-                        >
-                          <rect
-                            width={image.width}
-                            height={image.height}
-                            fill="white"
-                          />
-                        </svg>
-                      )}
+                    <div className="relative w-full">
                       <video
-                        poster={image.src}
-                        autoPlay
+                        ref={(el) => {
+                          videoRefs.current[index] = el;
+                        }}
+                        poster={poster}
                         muted
                         loop
                         playsInline
-                        onLoadedData={() => handleImageLoad(index)}
-                        className={`${hasDimensions ? "absolute top-0 left-0" : "block"} h-full w-auto object-contain transition-all duration-400 ${
+                        preload="metadata"
+                        disablePictureInPicture
+                        onLoadedMetadata={() => handleImageLoad(index)}
+                        onCanPlayThrough={() => handleImageLoad(index)}
+                        className={`block w-full h-auto object-contain transition-all duration-400 ${
                           hoveredIndex !== null && hoveredIndex !== index
                             ? "grayscale"
                             : ""
                         }`}
-                        style={{
-                          opacity: loadedImages.has(index) ? 1 : 0,
-                          transition: "opacity 0.5s ease-out",
-                        }}
                       >
                         <source src={image.videoSrc} type="video/mp4" />
                       </video>
@@ -115,61 +134,34 @@ const MasonryGallery = ({ images, onImageClick }: MasonryGalleryProps) => {
 
                 return (
                   <picture
-                    className={`inline-block h-full w-auto ${
+                    className={`block w-full h-auto ${
                       loadedImages.has(index) ? "show" : ""
                     }`}
                   >
-                    {hasDimensions && (
-                      <svg
-                        width={image.width}
-                        height={image.height}
-                        viewBox={`0 0 ${image.width} ${image.height}`}
-                        className="h-full w-auto"
-                      >
-                        <rect
-                          width={image.width}
-                          height={image.height}
-                          fill="white"
-                        />
-                      </svg>
-                    )}
                     <img
                       src={image.src}
                       alt={image.alt}
                       onLoad={() => handleImageLoad(index)}
-                      className={`${hasDimensions ? "absolute top-0 left-0" : "block"} h-full w-auto object-contain transition-all duration-400 ${
+                      className={`block h-auto w-full object-contain transition-all duration-400 ${
                         hoveredIndex !== null && hoveredIndex !== index
                           ? "grayscale"
                           : ""
                       }`}
                       style={{
                         opacity: loadedImages.has(index) ? 1 : 0,
-                        transition: "opacity 0.5s ease-out",
+                        transition: "opacity 0.4s ease-out",
                       }}
                       loading="lazy"
+                      decoding="async"
                     />
                   </picture>
                 );
               })()}
-              <ProgressiveBlur
-                className="pointer-events-none absolute bottom-0 left-0 h-[80%] w-full"
-                blurIntensity={0.6}
-                animate={hoveredIndex === index ? "visible" : "hidden"}
-                variants={{
-                  hidden: { opacity: 0 },
-                  visible: { opacity: 1 },
-                }}
-                transition={{ duration: 0.2, ease: "easeOut" }}
-              />
               {image.photographer && image.client && (
-                <motion.div
-                  className="absolute bottom-0 left-0 w-full pointer-events-none"
-                  animate={hoveredIndex === index ? "visible" : "hidden"}
-                  variants={{
-                    hidden: { opacity: 0 },
-                    visible: { opacity: 1 },
-                  }}
-                  transition={{ duration: 0.2, ease: "easeOut" }}
+                <div
+                  className={`absolute bottom-0 left-0 w-full pointer-events-none transition-opacity duration-200 ${
+                    hoveredIndex === index ? 'opacity-100' : 'opacity-0'
+                  }`}
                 >
                   <div className="flex flex-col items-center gap-0 px-4 py-3 text-center">
                     <p className="text-base font-medium text-white">
@@ -179,7 +171,7 @@ const MasonryGallery = ({ images, onImageClick }: MasonryGalleryProps) => {
                       Shot in {image.location}. {image.details}.
                     </span>
                   </div>
-                </motion.div>
+                </div>
               )}
             </div>
           </button>
@@ -187,6 +179,8 @@ const MasonryGallery = ({ images, onImageClick }: MasonryGalleryProps) => {
       </div>
     </div>
   );
-};
+});
+
+MasonryGallery.displayName = 'MasonryGallery';
 
 export default MasonryGallery;
