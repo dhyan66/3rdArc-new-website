@@ -40,12 +40,12 @@ const Footer = () => {
             @3rdarcproductions
           </a>
           <a
-            href="mailto:3rdarc@gmail.com"
+            href="mailto:3rdarcproductions@gmail.com"
             className="text-sm uppercase tracking-widest hover:opacity-60 transition-opacity duration-300 flex items-center gap-x-2 py-2"
             aria-label="Send us an email"
           >
             <Mail className="w-5 h-5" />
-            E: 3rdarc@gmail.com
+            E: 3rdarcproductions@gmail.com
           </a>
           <a
             href="tel:+17059705244"
