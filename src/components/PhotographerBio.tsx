@@ -15,11 +15,12 @@ const PhotographerBio = () => {
           3rd Arc Productions
         </h2>
         <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-inter">
-          CREATIVE PRODUCTION & PHOTOGRAPHY
+          PROFESSIONAL VIDEOGRAPHY & CREATIVE PRODUCTION
         </p>
         <p className="text-sm text-foreground/80 max-w-2xl leading-relaxed mx-auto">
-          Professional production company specializing in photography, videography, and creative content.
-          Bringing your vision to life with exceptional quality and attention to detail.
+          Leading videography and production company specializing in cinematic content creation, brand videos, 
+          and commercials. Bringing your vision to life through compelling visual storytelling with exceptional 
+          quality and creative direction.
         </p>
       </div>
     </section>

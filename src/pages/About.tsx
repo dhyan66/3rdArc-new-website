@@ -59,7 +59,7 @@ const About = () => {
     <>
       <SEO
         title="About - 3rd Arc Productions"
-        description="Learn about 3rd Arc Productions, a professional production company specializing in photography, videography, and creative content."
+        description="Learn about 3rd Arc Productions, a professional videography and production company specializing in cinematic content creation, brand videos, commercials, and creative storytelling."
         canonicalUrl="/about"
       />
 
@@ -83,7 +83,7 @@ const About = () => {
                 3rd Arc Productions
               </h1>
               <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-inter">
-                CREATIVE PRODUCTION & PHOTOGRAPHY
+                PROFESSIONAL VIDEOGRAPHY & CREATIVE PRODUCTION
               </p>
             </div>
 
@@ -100,21 +100,22 @@ const About = () => {
           {/* Bio Section */}
           <div className="max-w-2xl mx-auto px-3 md:px-5 space-y-8 text-center text-foreground/80 text-sm leading-relaxed mb-16">
             <p>
-              3rd Arc Productions is a professional production company specializing in photography,
-              videography, and creative content creation. We bring your vision to life with exceptional
-              quality and meticulous attention to detail.
+              3rd Arc Productions is a professional videography and production company specializing in 
+              cinematic content creation, brand videos, commercials, and creative storytelling. We bring 
+              your vision to life through exceptional quality and compelling visual narratives.
             </p>
 
             <p>
-              From concept to completion, we provide full production services tailored to your needs.
-              Our collaborative approach ensures your story is told authentically and beautifully.
+              From concept to completion, we provide comprehensive video production services tailored to 
+              your needs. Our collaborative approach ensures your story is told authentically and powerfully 
+              through the art of moving images.
             </p>
 
             <div className="pt-8">
               <h2 className="font-playfair text-xl text-foreground mb-4">Services</h2>
               <p className="text-foreground/70 text-xs uppercase tracking-wider leading-loose">
-                Fashion & Editorial Photography / Commercial Production / Art Buying & Creative Direction /
-                Location Scouting / Casting & Talent Coordination
+                Brand Videos & Commercials / Cinematic Videography / Corporate & Event Coverage / 
+                Creative Direction / Post-Production & Editing / Photography Services
               </p>
             </div>
 

@@ -41,26 +41,28 @@ const Index = () => {
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "3rd Arc Productions",
-    "description": "Professional production company specializing in photography, videography, and creative content. Bringing your vision to life with exceptional quality and attention to detail.",
+    "description": "Professional videography and production company specializing in cinematic content creation, brand videos, commercials, and creative storytelling. Bringing your vision to life through exceptional quality and compelling visual narratives.",
     "url": "https://3rdarcproductions.com",
     "image": "https://3rdarcproductions.com/og-image.jpg",
     "sameAs": [
       "https://instagram.com/3rdarcproductions"
     ],
     "knowsAbout": [
-      "Photography",
       "Videography",
-      "Creative Production",
-      "Commercial Content",
-      "Brand Content"
+      "Video Production",
+      "Cinematography",
+      "Brand Videos",
+      "Commercial Production",
+      "Creative Direction",
+      "Content Creation"
     ]
   };
 
   return (
     <>
       <SEO
-        title="3rd Arc Productions - Creative Production & Photography"
-        description="Professional production company specializing in photography, videography, and creative content. Bringing your vision to life with exceptional quality and attention to detail."
+        title="3rd Arc Productions - Professional Videography & Creative Production"
+        description="Professional videography and production company specializing in cinematic content creation, brand videos, commercials, and creative storytelling. Bringing your vision to life through exceptional quality and compelling visual narratives."
         canonicalUrl="/"
         ogType="website"
         jsonLd={jsonLd}
