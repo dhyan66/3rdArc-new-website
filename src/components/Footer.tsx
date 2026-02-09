@@ -30,7 +30,7 @@ const Footer = () => {
         
         <div className="flex flex-col gap-y-3 md:items-end">
           <a
-            href="https://instagram.com/3rdarcproductions"
+            href="https://www.instagram.com/3rdarcproductions/"
             target="_blank"
             rel="noopener noreferrer"
             className="text-sm uppercase tracking-widest hover:opacity-60 transition-opacity duration-300 flex items-center gap-x-2 py-2"

@@ -45,7 +45,7 @@ const Index = () => {
     "url": "https://3rdarcproductions.com",
     "image": "https://3rdarcproductions.com/og-image.jpg",
     "sameAs": [
-      "https://instagram.com/3rdarcproductions"
+      "https://www.instagram.com/3rdarcproductions/"
     ],
     "knowsAbout": [
       "Videography",

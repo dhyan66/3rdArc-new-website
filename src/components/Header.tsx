@@ -49,7 +49,7 @@ const Header = () => {
         <div className="hidden md:flex gap-x-4 text-sm items-center">
           <ThemeToggle />
           <a
-            href="https://instagram.com/3rdarcproductions"
+            href="https://www.instagram.com/3rdarcproductions/"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:opacity-60 transition-opacity duration-300 p-2 -m-2 inline-flex items-center justify-center"
@@ -120,7 +120,7 @@ const Header = () => {
             <div className="flex gap-x-6 mt-8 items-center">
               <ThemeToggle />
               <a
-                href="https://instagram.com/raya.photo"
+                href="https://www.instagram.com/raya.photo/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:opacity-60 transition-opacity duration-300 p-2 -m-2 inline-flex items-center justify-center"

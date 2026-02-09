@@ -17,7 +17,7 @@ const PortfolioFooter = () => {
         </a>
         <span className="mx-2">/</span>
         <a
-          href="https://instagram.com/3rdarcproductions"
+          href="https://www.instagram.com/3rdarcproductions/"
           target="_blank"
           rel="noopener noreferrer"
           className="hover:text-foreground transition-colors"
