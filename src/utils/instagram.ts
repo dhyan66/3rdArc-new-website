@@ -8,7 +8,7 @@ export const openInstagram = (username: string) => {
   if (isAndroid || isIOS) {
     // Try to open Instagram app first
     const appUrl = `instagram://user?username=${username}`;
-    const webUrl = `https://www.instagram.com/${username}/`;
+    const webUrl = `https://www.instagram.com/${username}`;
     
     // Create a temporary link to test if app is installed
     const now = Date.now();
@@ -22,6 +22,6 @@ export const openInstagram = (username: string) => {
     }, 1000);
   } else {
     // Desktop: just open the web URL
-    window.open(`https://www.instagram.com/${username}/`, '_blank');
+    window.open(`https://www.instagram.com/${username}`, '_blank');
   }
 };
