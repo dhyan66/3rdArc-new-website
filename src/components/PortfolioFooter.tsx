@@ -1,3 +1,5 @@
+import { openInstagram } from "@/utils/instagram";
+
 const PortfolioFooter = () => {
   return (
     <footer className="max-w-[1600px] mx-auto px-3 md:px-5 pb-16">
@@ -16,14 +18,15 @@ const PortfolioFooter = () => {
           M: +1 (705) 970-5244
         </a>
         <span className="mx-2">/</span>
-        <a
-          href="https://www.instagram.com/3rdarcproductions/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hover:text-foreground transition-colors"
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            openInstagram('3rdarcproductions');
+          }}
+          className="hover:text-foreground transition-colors cursor-pointer"
         >
           I: @3rdarcproductions
-        </a>
+        </button>
       </div>
     </footer>
   );

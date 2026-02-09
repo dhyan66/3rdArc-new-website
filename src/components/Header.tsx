@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Menu, X, Instagram, Mail } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import FocusTrap from "focus-trap-react";
+import { openInstagram } from "@/utils/instagram";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -48,15 +49,16 @@ const Header = () => {
 
         <div className="hidden md:flex gap-x-4 text-sm items-center">
           <ThemeToggle />
-          <a
-            href="https://www.instagram.com/3rdarcproductions/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:opacity-60 transition-opacity duration-300 p-2 -m-2 inline-flex items-center justify-center"
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              openInstagram('3rdarcproductions');
+            }}
+            className="hover:opacity-60 transition-opacity duration-300 p-2 -m-2 inline-flex items-center justify-center cursor-pointer"
             aria-label="Visit our Instagram page"
           >
             <Instagram className="w-6 h-6" />
-          </a>
+          </button>
           <a
             href="mailto:3rdarcproductions@gmail.com"
             className="hover:opacity-60 transition-opacity duration-300 p-2 -m-2 inline-flex items-center justify-center"
@@ -119,15 +121,16 @@ const Header = () => {
             </nav>
             <div className="flex gap-x-6 mt-8 items-center">
               <ThemeToggle />
-              <a
-                href="https://www.instagram.com/raya.photo/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:opacity-60 transition-opacity duration-300 p-2 -m-2 inline-flex items-center justify-center"
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  openInstagram('raya.photo');
+                }}
+                className="hover:opacity-60 transition-opacity duration-300 p-2 -m-2 inline-flex items-center justify-center cursor-pointer"
                 aria-label="Visit our Instagram page"
               >
                 <Instagram className="w-7 h-7" />
-              </a>
+              </button>
               <a
                 href="mailto:hello@raya.photo"
                 className="hover:opacity-60 transition-opacity duration-300 p-2 -m-2 inline-flex items-center justify-center"
