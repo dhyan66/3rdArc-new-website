@@ -1,9 +1,0 @@
-name = "3rdarcproductions"
-compatibility_date = "2024-01-01"
-
-[build]
-command = "bun install && bun run build"
-
-[build.upload]
-format = "service-worker"
-dir = "dist"
