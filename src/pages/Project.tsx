@@ -30,8 +30,8 @@ const Project = () => {
     "description": "A collection of images capturing the ethereal quality of early morning light in mountain landscapes. These photographs explore the delicate balance between shadow and illumination in high-altitude environments.",
     "creator": {
       "@type": "Person",
-      "name": "Morgan Blake",
-      "url": "https://morganblake.com"
+      "name": "3rdArc",
+      "url": "https://3rdarcproductions.com"
     },
     "about": {
       "@type": "Thing",
@@ -39,11 +39,11 @@ const Project = () => {
     },
     "image": projectImages.map((img) => ({
       "@type": "ImageObject",
-      "contentUrl": `https://morganblake.com${img.src}`,
+      "contentUrl": `https://3rdarcproductions.com${img.src}`,
       "caption": img.caption,
       "creator": {
         "@type": "Person",
-        "name": "Morgan Blake"
+        "name": "3rdArc"
       }
     })),
     "datePublished": "2024",
@@ -53,7 +53,7 @@ const Project = () => {
   return (
     <>
       <SEO
-        title="Alpine Light - Morgan Blake"
+        title="Alpine Light - 3rdArc"
         description="A collection of images capturing the ethereal quality of early morning light in mountain landscapes. These photographs explore the delicate balance between shadow and illumination in high-altitude environments."
         canonicalUrl={`/project/${slug}`}
         ogType="article"
