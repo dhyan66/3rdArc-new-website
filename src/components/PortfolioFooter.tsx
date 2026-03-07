@@ -10,7 +10,7 @@ const PortfolioFooter = () => {
           className="hover:text-foreground transition-colors inline-flex items-center gap-1"
         >
           <Mail className="w-3 h-3" />
-          E: 3rdarcproductions@gmail.com
+          3rdarcproductions@gmail.com
         </a>
         <span className="mx-2">/</span>
         <a
@@ -18,7 +18,7 @@ const PortfolioFooter = () => {
           className="hover:text-foreground transition-colors inline-flex items-center gap-1"
         >
           <Phone className="w-3 h-3" />
-          M: +1 (705) 970-5244
+          +1 (705) 970-5244
         </a>
         <span className="mx-2">/</span>
         <button
@@ -29,7 +29,7 @@ const PortfolioFooter = () => {
           className="hover:text-foreground transition-colors cursor-pointer inline-flex items-center gap-1"
         >
           <Instagram className="w-3 h-3" />
-          I: @3rdarcproductions
+          @3rdarcproductions
         </button>
       </div>
     </footer>
