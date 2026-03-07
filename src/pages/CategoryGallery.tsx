@@ -71,19 +71,19 @@ const CategoryGallery = () => {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    "name": `${getCategoryTitle(category)} - Morgan Blake`,
+    "name": `${getCategoryTitle(category)} - 3rdArc`,
     "description": getCategoryDescription(category),
-    "url": `https://morganblake.com/category/${category}`,
+    "url": `https://3rdarcproductions.com/category/${category}`,
     "creator": {
       "@type": "Person",
-      "name": "Morgan Blake"
+      "name": "3rdArc"
     }
   };
 
   return (
     <>
       <SEO
-        title={`${getCategoryTitle(category)} - Morgan Blake`}
+        title={`${getCategoryTitle(category)} - 3rdArc`}
         description={getCategoryDescription(category)}
         canonicalUrl={`/category/${category}`}
         jsonLd={jsonLd}

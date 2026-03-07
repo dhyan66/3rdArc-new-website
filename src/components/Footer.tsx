@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { Instagram, Mail } from "lucide-react";
+import { Instagram, Mail, Phone } from "lucide-react";
+import { openInstagram } from "@/utils/instagram";
 
 const Footer = () => {
   return (
@@ -29,16 +30,17 @@ const Footer = () => {
         </nav>
         
         <div className="flex flex-col gap-y-3 md:items-end">
-          <a
-            href="https://instagram.com/3rdarcproductions"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm uppercase tracking-widest hover:opacity-60 transition-opacity duration-300 flex items-center gap-x-2 py-2"
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              openInstagram('3rdarcproductions');
+            }}
+            className="text-sm uppercase tracking-widest hover:opacity-60 transition-opacity duration-300 flex items-center gap-x-2 py-2 cursor-pointer"
             aria-label="Visit our Instagram page"
           >
             <Instagram className="w-5 h-5" />
             @3rdarcproductions
-          </a>
+          </button>
           <a
             href="mailto:3rdarcproductions@gmail.com"
             className="text-sm uppercase tracking-widest hover:opacity-60 transition-opacity duration-300 flex items-center gap-x-2 py-2"
@@ -52,6 +54,7 @@ const Footer = () => {
             className="text-sm uppercase tracking-widest hover:opacity-60 transition-opacity duration-300 flex items-center gap-x-2 py-2"
             aria-label="Call us"
           >
+            <Phone className="w-5 h-5" />
             M: +1 (705) 970-5244
           </a>
           
