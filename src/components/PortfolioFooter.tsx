@@ -1,3 +1,4 @@
+import { Instagram, Mail, Phone } from "lucide-react";
 import { openInstagram } from "@/utils/instagram";
 
 const PortfolioFooter = () => {
@@ -6,15 +7,17 @@ const PortfolioFooter = () => {
       <div className="text-center text-[10px] uppercase tracking-widest font-inter text-muted-foreground">
         <a
           href="mailto:3rdarcproductions@gmail.com"
-          className="hover:text-foreground transition-colors"
+          className="hover:text-foreground transition-colors inline-flex items-center gap-1"
         >
+          <Mail className="w-3 h-3" />
           E: 3rdarcproductions@gmail.com
         </a>
         <span className="mx-2">/</span>
         <a
           href="tel:+17059705244"
-          className="hover:text-foreground transition-colors"
+          className="hover:text-foreground transition-colors inline-flex items-center gap-1"
         >
+          <Phone className="w-3 h-3" />
           M: +1 (705) 970-5244
         </a>
         <span className="mx-2">/</span>
@@ -23,8 +26,9 @@ const PortfolioFooter = () => {
             e.preventDefault();
             openInstagram('3rdarcproductions');
           }}
-          className="hover:text-foreground transition-colors cursor-pointer"
+          className="hover:text-foreground transition-colors cursor-pointer inline-flex items-center gap-1"
         >
+          <Instagram className="w-3 h-3" />
           I: @3rdarcproductions
         </button>
       </div>

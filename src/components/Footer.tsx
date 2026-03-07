@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Instagram, Mail } from "lucide-react";
+import { Instagram, Mail, Phone } from "lucide-react";
 import { openInstagram } from "@/utils/instagram";
 
 const Footer = () => {
@@ -54,6 +54,7 @@ const Footer = () => {
             className="text-sm uppercase tracking-widest hover:opacity-60 transition-opacity duration-300 flex items-center gap-x-2 py-2"
             aria-label="Call us"
           >
+            <Phone className="w-5 h-5" />
             M: +1 (705) 970-5244
           </a>
           
