@@ -12,6 +12,9 @@ const port = 3001;
 app.use(cors());
 app.use(express.json());
 
+// Log API key presence (don't reveal in production logs)
+console.log('RESEND_API_KEY present?', !!process.env.RESEND_API_KEY);
+
 // Initialize Resend
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -44,6 +47,7 @@ app.post('/api/contact', async (req, res) => {
     }
 
     // Send email to 3rd Arc Productions
+    console.log('sending email to 3rdarcproductions@gmail.com');
     const emailResponse = await resend.emails.send({
       from: 'Contact Form <onboarding@resend.dev>',
       to: '3rdarcproductions@gmail.com',
@@ -68,7 +72,7 @@ app.post('/api/contact', async (req, res) => {
     });
 
     if (emailResponse.error) {
-      console.error('Resend error:', emailResponse.error);
+      console.error('Resend error object:', emailResponse);
       return res.status(500).json({ error: 'Failed to send email' });
     }
 
