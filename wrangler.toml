@@ -1,0 +1,27 @@
+# Cloudflare Pages Configuration
+name = "3rdArc-new-website"
+type = "javascript"
+account_id = "your-account-id"
+
+# Build configuration
+[build]
+command = "npm run build"
+watch_paths = ["src/**/*.ts", "src/**/*.tsx"]
+
+# Build output directory
+[build.upload]
+delete_undeployed_files = true
+
+# Environment variables
+[env.production]
+vars = { ENVIRONMENT = "production" }
+
+[env.preview]
+vars = { ENVIRONMENT = "preview" }
+
+[env.development]
+vars = { ENVIRONMENT = "development" }
+
+# Observability (optional)
+[observability]
+enabled = true
