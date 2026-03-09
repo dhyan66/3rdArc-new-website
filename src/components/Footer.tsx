@@ -4,7 +4,7 @@ import { openInstagram } from "@/utils/instagram";
 
 const Footer = () => {
   return (
-    <footer className="border-t border-border pt-16 pb-8 px-8">
+    <footer className="border-t border-border pt-16 pb-8 px-8 font-[Times_New_Roman]">
       <div className="flex justify-center mb-12">
         <img 
           src="/3rd-arc-logo.png" 
