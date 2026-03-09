@@ -33,14 +33,14 @@ npm install resend
 4. Create a new API key
 5. Copy the API key
 
-### 3. Set Environment Variables in Cloudflare
+### 3. Set Environment Variables
 
 **For Local Development:**
 
-```bash
-# Create a .env.local file (not committed to git)
-RESEND_API_KEY=your_actual_api_key
-```
+1. Add your Resend API key to the `.env` file:
+   ```bash
+   RESEND_API_KEY=your_actual_api_key_here
+   ```
 
 **For Cloudflare Pages:**
 
@@ -58,7 +58,27 @@ Replace `your-account-id` in `wrangler.toml` with your actual Cloudflare account
 wrangler whoami
 ```
 
-### 5. Configure Resend Domain (Optional but Recommended)
+### 5. Test Locally
+
+**Option 1: Run both servers together (Recommended):**
+
+```bash
+npm run dev:full
+```
+
+**Option 2: Run servers separately:**
+
+```bash
+# Terminal 1 - API server
+npm run dev:api
+
+# Terminal 2 - Frontend
+npm run dev
+```
+
+Visit `http://localhost:8081/contact` and test the contact form.
+
+### 6. Configure Resend Domain (Optional but Recommended)
 
 For production, set up your custom domain in Resend:
 
@@ -72,14 +92,6 @@ from: "Contact Form <contact@3rdarcproductions.com>";
 ```
 
 **For now**, emails will be sent from the Resend default domain during onboarding.
-
-### 6. Test Locally (Optional)
-
-```bash
-npm run dev
-```
-
-Visit the contact form and submit a test message.
 
 ### 7. Deploy to Cloudflare Pages
 
